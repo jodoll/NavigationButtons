@@ -1,3 +1,5 @@
+NOTE: This is a patched version of version 0.3.2-beta!
+
 # ESP32 BLE Keyboard library
 
 This library allows you to make the ESP32 act as a Bluetooth Keyboard and control what it does.  
