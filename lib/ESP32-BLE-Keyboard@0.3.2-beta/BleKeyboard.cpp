@@ -90,7 +90,7 @@ static const uint8_t _hidReportDescriptor[] = {
   USAGE(2),           0x26, 0x02,    //   Usage (WWW stop)    ; bit 4: 16
   USAGE(2),           0x24, 0x02,    //   Usage (WWW back)    ; bit 5: 32
   USAGE(2),           0x83, 0x01,    //   Usage (Media sel)   ; bit 6: 64
-  USAGE(2),           0x8A, 0x01,    //   Usage (Mail)        ; bit 7: 128
+  USAGE(1),           0x30,    		 //   Usage (Power)       ; bit 7: 128
   HIDINPUT(1),        0x02,          //   INPUT (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
   END_COLLECTION(0)                  // END_COLLECTION
 };
