@@ -65,7 +65,7 @@
     },
     {
       "type": "wokwi-pushbutton",
-      "id": "btn7",
+      "id": "btn8",
       "top": 159.8,
       "left": -38.4,
       "rotate": 270,
@@ -73,36 +73,36 @@
     },
     {
       "type": "wokwi-pushbutton",
-      "id": "btn8",
+      "id": "btn7",
       "top": 83,
       "left": 28.8,
       "attrs": { "color": "white", "key": "ArrowRight" }
     }
   ],
   "connections": [
-    [ "btn3:1.r", "esp:0", "green", [ "v0" ] ],
-    [ "btn3:1.r", "btn7:1.l", "green", [ "v0" ] ],
-    [ "esp:1", "btn2:1.r", "orange", [ "h0" ] ],
-    [ "btn2:1.r", "btn6:1.l", "orange", [ "v0" ] ],
-    [ "btn6:1.l", "btn8:1.l", "orange", [ "h0" ] ],
-    [ "esp:2", "btn1:1.r", "black", [ "h0" ] ],
-    [ "btn1:1.r", "btn5:1.l", "black", [ "v0" ] ],
-    [ "btn5:1.l", "btn4:1.r", "black", [ "h0" ] ],
+    [ "btn3:2.r", "esp:0", "green", [ "v0" ] ],
+    [ "btn3:2.r", "btn8:1.l", "green", [ "v0" ] ],
+    [ "esp:1", "btn2:2.r", "orange", [ "h0" ] ],
+    [ "btn2:2.r", "btn6:1.l", "orange", [ "v0" ] ],
+    [ "btn6:1.l", "btn7:1.l", "orange", [ "h0" ] ],
+    [ "esp:2", "btn1:2.r", "black", [ "h0" ] ],
+    [ "btn1:2.r", "btn5:1.l", "black", [ "v0" ] ],
+    [ "btn5:1.l", "btn4:2.r", "black", [ "h0" ] ],
     [ "esp:3", "btn1:1.l", "#8f4814", [ "h0" ] ],
     [ "btn1:1.l", "btn2:1.l", "#8f4814", [ "h0" ] ],
     [ "btn2:1.l", "btn3:1.l", "#8f4814", [ "h0" ] ],
-    [ "esp:4", "btn5:1.r", "red", [ "v0" ] ],
-    [ "btn5:1.r", "btn6:1.r", "red", [ "v0" ] ],
-    [ "btn6:1.r", "btn7:1.r", "red", [ "v0" ] ],
-    [ "esp:5", "btn8:1.r", "blue", [ "h0" ] ],
-    [ "btn8:1.r", "btn4:2.l", "blue", [ "v0" ] ],
+    [ "esp:4", "btn5:2.r", "red", [ "v0" ] ],
+    [ "btn5:2.r", "btn6:2.r", "red", [ "v0" ] ],
+    [ "btn6:2.r", "btn8:2.r", "red", [ "v0" ] ],
+    [ "esp:5", "btn7:2.r", "blue", [ "h0" ] ],
+    [ "btn7:2.r", "btn4:1.l", "blue", [ "v0" ] ],
     [ "led1:C", "esp:GND.1", "green", [ "v0" ] ],
     [ "led1:A", "esp:6", "green", [ "v0" ] ]
   ],
   "serialMonitor": {
-    "display": "auto",
+    "display": "terminal",
     "newline": "lf",
-    "convertEol": false
+    "convertEol": true
   },
   "dependencies": {}
 }
