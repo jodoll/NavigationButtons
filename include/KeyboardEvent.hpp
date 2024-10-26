@@ -5,16 +5,16 @@ namespace KeyboardEvent
 {
     enum KeyCode
     {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT,
+        PLUS = 1,
+        MINUS,
 
         ENTER,
         BACK,
 
-        PLUS,
-        MINUS
+        UP,
+        LEFT,
+        RIGHT,
+        DOWN,
     };
 
     enum Type
