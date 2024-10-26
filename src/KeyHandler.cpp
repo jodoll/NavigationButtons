@@ -1,10 +1,12 @@
 #include "KeyHandler.hpp"
+#include "Flags.hpp"
 
 NoopKeyMap KeyHandler::noopKeyMap = NoopKeyMap();
 
 void KeyHandler::connect()
 {
     bleKeyboard.begin();
+    ledController->indicateSelectedKeyMap(3);
 }
 
 void KeyHandler::setKeyMap(Keyboard::KeyMap &keyMap)
@@ -15,6 +17,11 @@ void KeyHandler::setKeyMap(Keyboard::KeyMap &keyMap)
 
 void KeyHandler::handle(KeyboardEvent::Event event)
 {
+    if (DEBUG)
+        Serial.printf("Event: Type=%d, Key=%d\n", event.type, event.key);
+
+    if (event.type < KeyboardEvent::Type::RELEASED)
+        ledController->onKeyPressed();
     auto keyPresses = currentKeyMap->lookup(event);
     for (Keyboard::KeyPress keyPress : keyPresses)
     {
@@ -31,6 +38,8 @@ void KeyHandler::handle(KeyboardEvent::Event event)
             break;
         }
     }
+    if (event.type == KeyboardEvent::Type::RELEASED)
+        ledController->onKeyReleased();
 }
 
 void KeyHandler::releaseKeys(Keyboard::KeyPress &keyPress)

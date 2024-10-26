@@ -1,13 +1,11 @@
 #include "Arduino.h"
+#include "Flags.hpp"
 #include "keyboard/BarButtons.hpp"
 #include "BleKeyboard.h"
 
-#ifndef DEBUG
-#define DEBUG 0
-#endif
-
-KeyHandler keyHandler = KeyHandler();
-KeypadKeyboard keypadKeyboard = barButtons(keyHandler);
+StatusLedController ledController = StatusLedController(BarButtons::ledPin);
+KeyHandler keyHandler = KeyHandler(ledController);
+KeypadKeyboard keypadKeyboard = BarButtons::keypad(keyHandler);
 PhysicalKeyboard& keyboard = keypadKeyboard;
 
 void setup()
@@ -15,7 +13,10 @@ void setup()
     if (DEBUG)
     {
         // Might block until serial is actually connected in debug mode
+        // Depends on the board, known boards to block:
+        // Liolin C3
         Serial.begin(9600);
+        Serial.println("Serial Connected");
     }
     keyHandler.connect();
 
@@ -27,7 +28,6 @@ void setup()
     // keypad.setHoldTime(long_press_time);
 
     // // Enable the led to indicate we're switched on
-    // pinMode(LED_PIN, OUTPUT);
 
     // // End of setup()
     // if (DEBUG)
