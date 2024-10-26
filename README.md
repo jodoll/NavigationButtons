@@ -25,6 +25,12 @@ Moreover, this will eliminate the need to write a firmware from scratch for a ne
 - [ ] Uploading Keymaps
 - [ ] Uploading Firmware
 
+# Development
+This project contains a definition to emulate the BarButton's hardware setup with [WokWi](https://wokwi.com/) for easy development.
+To use it, just install the [WokWi VsCode plugin](https://marketplace.visualstudio.com/items?itemName=Wokwi.wokwi-vscode) (`wokwi.wokwi-vscode`, a free license is needed) and execute the `WokWi: Start Simulator` task form the command pallete. You might need build the project first to successfully run the simulator.
+
+To get a nicer serial terminal, you might want to try Microsofts [Serial Monitor plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-serial-monitor) (`ms-vscode.vscode-serial-monitor`). After installing you can connect in `tcp`-mode to `localhost:4000`.
+
 # Credits
 All credit for used libraries goes to the original creators.
 
