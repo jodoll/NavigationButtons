@@ -9,8 +9,6 @@
 KeyHandler keyHandler = KeyHandler();
 KeypadKeyboard keypadKeyboard = barButtons(keyHandler);
 PhysicalKeyboard& keyboard = keypadKeyboard;
-BleKeyboard bleKeyboard = BleKeyboard("EspKeyboard", "jodoll", 100);
-
 
 void setup()
 {
@@ -19,8 +17,8 @@ void setup()
         // Might block until serial is actually connected in debug mode
         Serial.begin(9600);
     }
+    keyHandler.connect();
 
-    bleKeyboard.begin();
 
     // // Handle all keypad events through this listener
     //keypad.addEventListener(keypad_handler); // Add an event listener for this keypad

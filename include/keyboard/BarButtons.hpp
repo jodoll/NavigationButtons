@@ -10,7 +10,7 @@ KeypadKeyboard barButtons(KeyHandler &handler){
         {'2', '6', '7'},
         {'3', '8', '9'}};
     
-    std::map<char, KeyboardEvent::Key> keymap = {
+    std::map<char, KeyboardEvent::KeyCode> keymap = {
         {'1', KeyboardEvent::PLUS},
         {'2', KeyboardEvent::MINUS},
         {'3', KeyboardEvent::ENTER},

@@ -1,6 +1,9 @@
+#ifndef KEYBOARD_EVENT
+#define KEYBOARD_EVENT
+
 namespace KeyboardEvent
 {
-    enum Key
+    enum KeyCode
     {
         UP,
         DOWN,
@@ -23,7 +26,9 @@ namespace KeyboardEvent
 
     struct Event
     {
-        Key key;
+        KeyCode key;
         Type type;
     };
 }
+
+#endif

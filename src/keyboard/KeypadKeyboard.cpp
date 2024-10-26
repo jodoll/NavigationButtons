@@ -11,7 +11,7 @@ void KeypadKeyboard::scanKeys()
     auto iterator = keymap.find(keyCode);
     if (iterator == keymap.end())
         return; // char not found in map (== configuration error)
-    KeyboardEvent::Key key = iterator->second;
+    KeyboardEvent::KeyCode key = iterator->second;
 
     // map event type
     KeyState state = keypad.getState(); 
