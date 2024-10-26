@@ -2,11 +2,14 @@
 #include "Flags.hpp"
 #include "keyboard/BarButtons.hpp"
 #include "BleKeyboard.h"
+#include "keymap/NavigationKeyMap.hpp"
 
 StatusLedController ledController = StatusLedController(BarButtons::ledPin);
 KeyHandler keyHandler = KeyHandler(ledController);
 KeypadKeyboard keypadKeyboard = BarButtons::keypad(keyHandler);
 PhysicalKeyboard& keyboard = keypadKeyboard;
+
+NavigationKeyMap navigationKeyMap;
 
 void setup()
 {
@@ -19,6 +22,7 @@ void setup()
         Serial.println("Serial Connected");
     }
     keyHandler.connect();
+    keyHandler.setKeyMap(navigationKeyMap);
 
 
     // // Handle all keypad events through this listener
@@ -38,4 +42,5 @@ void setup()
 void loop()
 {
     keyboard.scanKeys();
+    keyHandler.tick();
 }

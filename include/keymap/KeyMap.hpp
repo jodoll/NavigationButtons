@@ -13,6 +13,7 @@ namespace Keyboard
         {
             INSTANT,
             HOLD,
+            REPEATING,
             RELEASE
         };
         enum KeyType
@@ -20,21 +21,28 @@ namespace Keyboard
             SINGLE,
             MEDIA
         };
+        struct Key
+        {
+            Key(uint8_t character) : type(KeyType::SINGLE), character(character) {}
+            Key(const MediaKeyReport *mediaKey) : type(KeyType::MEDIA), mediaKey(mediaKey) {}
 
-        KeyPress(ActionType action, uint8_t character) : action(action), type(KeyType::SINGLE), character(character){}
-        KeyPress(ActionType action, const MediaKeyReport* mediaKey) : action(action), type(KeyType::MEDIA), mediaKey(mediaKey){}
+            KeyType type;
+            uint8_t character = 0;
+            const MediaKeyReport *mediaKey = nullptr;
+        };
+
+        KeyPress(ActionType action, uint8_t character) : action(action), key(character){}
+        KeyPress(ActionType action, const MediaKeyReport *mediaKey) : action(action), key(mediaKey) {}
 
         ActionType action;
-        KeyType type;
-        uint8_t character = 0;
-        const MediaKeyReport* mediaKey = nullptr;
+        Key key;
     };
 
     class KeyMap
     {
     private:
     public:
-        virtual ~KeyMap() {} 
+        virtual ~KeyMap() {}
         virtual std::vector<KeyPress> lookup(KeyboardEvent::Event event) = 0;
     };
 }
