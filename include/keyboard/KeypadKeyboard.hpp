@@ -11,6 +11,7 @@ private:
     Keypad keypad;
     std::map<char, KeyboardEvent::KeyCode> keymap;
 
+    void handleKey(Key &key);
 public:
     KeypadKeyboard(KeyHandler &keyHandler, Keypad keypad, std::map<char, KeyboardEvent::KeyCode> keymap)
         : keyHandler(&keyHandler), keypad(keypad), keymap(keymap)

@@ -2,21 +2,28 @@
 
 void KeypadKeyboard::scanKeys()
 {
-    // map key code
-    // Could use getKeys() if we did support multiple key presses
-    char keyCode = keypad.getKey();
-    if (keyCode == NO_KEY)
+    if (!keypad.getKeys())
         return;
 
-    auto iterator = keymap.find(keyCode);
+    for (Key key : keypad.key)
+    {
+        handleKey(key);
+    }
+}
+
+void KeypadKeyboard::handleKey(Key &key)
+{
+    if (!key.stateChanged)
+        return;
+
+    auto iterator = keymap.find(key.kchar);
     if (iterator == keymap.end())
         return; // char not found in map (== configuration error)
-    KeyboardEvent::KeyCode key = iterator->second;
+    KeyboardEvent::KeyCode keyCode = iterator->second;
 
     // map event type
-    KeyState state = keypad.getState(); 
     KeyboardEvent::Type type;
-    switch (state)
+    switch (key.kstate)
     {
     case PRESSED:
         type = KeyboardEvent::Type::PRESSED;
@@ -31,5 +38,5 @@ void KeypadKeyboard::scanKeys()
         return;
     };
 
-    keyHandler->handle(KeyboardEvent::Event{key, type});
+    keyHandler->handle(KeyboardEvent::Event{keyCode, type});
 }
