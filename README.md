@@ -3,7 +3,7 @@
 # Vision
 This project aims to be a firmware that can run on different diy handlebar controllers to control a (navigation) smartphone/tablet on a motorcycle.
 For example controlling [DMD2](https://www.drivemodedashboard.com/) with JaxeAdv's [BarButtons](https://jaxeadv.com/barbuttons/).  
-Instead of providing a fixed set of keymaps, users will be able to define and upload their keymaps to the controller via an Android app, thus allowing them to customize them to their needs.
+Instead of providing a fixed set of keymaps, users will be able to define and upload their keymaps to the controller via an Android app, thus allowing them to customize them to their needs.  
 Moreover, this will eliminate the need to write a firmware from scratch for a new/different controller, as only the hardware mapping part has to be implemented/configured (+ creating a keymap).
 
 # Feature Checklist
@@ -24,3 +24,19 @@ Moreover, this will eliminate the need to write a firmware from scratch for a ne
 - [ ] Creating Keymaps
 - [ ] Uploading Keymaps
 - [ ] Uploading Firmware
+
+# Credits
+All credit for used libraries goes to the original creators.
+
+The Currently used libraries and frameworks are:
+* [ESP32-BLE-Keyboard](https://github.com/T-vK/ESP32-BLE-Keyboard) by T-vK and Contributors
+    * This library has been modified, check [git/GitHub](https://github.com/jodoll/NavigationButtons/commits/main/lib/ESP32-BLE-Keyboard%400.3.2-beta) for the changes (the Initial commit contains the Library as obtained from [GitHub](https://github.com/T-vK/ESP32-BLE-Keyboard/releases/download/0.3.2-beta/ESP32-BLE-Keyboard.zip))
+* [Keypad](https://github.com/Chris--A/Keypad) by Mark Stanley, Alexander Brevig
+* [Arduino ESP32](https://github.com/espressif/arduino-esp32) by espressif
+* [The Arduino Framework](https://www.arduino.cc/)
+
+For development:
+* [Platform IO](https://platformio.org/)
+* [Wokwi](https://wokwi.com/)
+
+Special thanks goes to [JaxeAdv](https://jaxeadv.com/) for his awesome [BarButtons](https://jaxeadv.com/barButtons) project that inspired this project. All credits for anything BarButtons related (hardware and software wise) go to him.
