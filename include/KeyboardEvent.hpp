@@ -19,9 +19,9 @@ namespace KeyboardEvent
 
     enum Type
     {
+        RELEASED,
         PRESSED,
-        HOLD,
-        RELEASED
+        HOLD
     };
 
     struct Event
