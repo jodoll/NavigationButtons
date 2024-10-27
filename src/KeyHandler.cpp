@@ -5,14 +5,15 @@ NoopKeyMap KeyHandler::noopKeyMap = NoopKeyMap();
 
 void KeyHandler::connect()
 {
-    bleKeyboard.begin();
+    wrapper.connect();
     ledController->indicateSelectedKeyMap(3);
 }
 
 void KeyHandler::setKeyMap(Keyboard::KeyMap &keyMap)
 {
-    bleKeyboard.releaseAll();
+    wrapper.releaseAll();
     currentKeyMap = &keyMap;
+    ledController->indicateSelectedKeyMap(3);
 }
 
 void KeyHandler::handle(KeyboardEvent::Event event)
@@ -28,16 +29,17 @@ void KeyHandler::handle(KeyboardEvent::Event event)
         switch (keyPress.action)
         {
         case Keyboard::KeyPress::ActionType::INSTANT:
-            sendKeys(keyPress.key);
+            wrapper.sendKey(keyPress.key);
             break;
         case Keyboard::KeyPress::ActionType::HOLD:
-            pressKey(keyPress.key);
+            wrapper.pressKey(keyPress.key);
             break;
         case Keyboard::KeyPress::ActionType::REPEATING:
             addRepeatingKey(keyPress.key);
             break;
         case Keyboard::KeyPress::ActionType::RELEASE:
-            releaseKey(keyPress.key);
+            removeRepeatingKey(keyPress.key);
+            wrapper.releaseKey(keyPress.key);
             break;
         }
     }
@@ -45,51 +47,6 @@ void KeyHandler::handle(KeyboardEvent::Event event)
         ledController->onKeyReleased();
 }
 
-void KeyHandler::releaseKey(Keyboard::KeyPress::Key &key)
-{
-    removeRepeatingKey(key);
-    switch (key.type)
-    {
-    case Keyboard::KeyPress::KeyType::SINGLE:
-        bleKeyboard.release(key.character);
-        break;
-    case Keyboard::KeyPress::KeyType::MEDIA:
-        bleKeyboard.release(*key.mediaKey);
-        break;
-    }
-}
-
-void KeyHandler::pressKey(Keyboard::KeyPress::Key &key)
-{
-    switch (key.type)
-    {
-    case Keyboard::KeyPress::KeyType::SINGLE:
-        bleKeyboard.press(key.character);
-        break;
-    case Keyboard::KeyPress::KeyType::MEDIA:
-        bleKeyboard.press(*key.mediaKey);
-        break;
-    }
-}
-
-void KeyHandler::sendKeys(const Keyboard::KeyPress::Key &key)
-{
-    switch (key.type)
-    {
-    case Keyboard::KeyPress::KeyType::SINGLE:
-        bleKeyboard.write(key.character);
-        if (DEBUG)
-            Serial.printf("Sending Key %c\n", key.character);
-        break;
-    case Keyboard::KeyPress::KeyType::MEDIA:
-        bleKeyboard.write(*key.mediaKey);
-        if (DEBUG)
-            Serial.println("Sending MediaKey");
-        break;
-    }
-}
-
-unsigned long lastTick = 0;
 void KeyHandler::tick()
 {
     auto now = millis();
@@ -103,7 +60,7 @@ void KeyHandler::tick()
         {
             auto remainingTimeToNextPress = repeatingKeyDelayMs - ((now - futurePress.pressAfter) % repeatingKeyDelayMs);
             futurePress.pressAfter += remainingTimeToNextPress;
-            sendKeys(futurePress.key);
+            wrapper.sendKey(futurePress.key);
         }
     };
     lastTick = now;
@@ -111,30 +68,17 @@ void KeyHandler::tick()
 
 void KeyHandler::addRepeatingKey(Keyboard::KeyPress::Key &key)
 {
-    std::string mapKey = asString(key);
+    std::string mapKey = key.asString();
     if (DEBUG)
-        Serial.printf("Inserting key %c\n", mapKey);
+        Serial.printf("Inserting key %c\n", mapKey.c_str());
     FutureKeyPress futureKeyPress = {key, millis()};
     repeatingKeys.insert({mapKey, futureKeyPress});
 }
 
 void KeyHandler::removeRepeatingKey(Keyboard::KeyPress::Key &key)
 {
-    std::string mapKey = asString(key);
+    std::string mapKey = key.asString();
     if (DEBUG)
         Serial.printf("Removing key %s\n", mapKey.c_str());
     repeatingKeys.erase(mapKey);
-}
-
-std::string KeyHandler::asString(Keyboard::KeyPress::Key &key)
-{
-    switch (key.type)
-    {
-    case Keyboard::KeyPress::KeyType::SINGLE:
-        return std::string(1, key.character);
-    case Keyboard::KeyPress::KeyType::MEDIA:
-        return std::to_string(reinterpret_cast<uintptr_t>(key.mediaKey));
-        break;
-    }
-    return std::string();
 }

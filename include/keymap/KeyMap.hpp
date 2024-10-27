@@ -29,9 +29,22 @@ namespace Keyboard
             KeyType type;
             uint8_t character = 0;
             const MediaKeyReport *mediaKey = nullptr;
+
+            std::string asString()
+            {
+                switch (type)
+                {
+                case Keyboard::KeyPress::KeyType::SINGLE:
+                    return std::string(1, character);
+                case Keyboard::KeyPress::KeyType::MEDIA:
+                    return std::to_string(reinterpret_cast<uintptr_t>(mediaKey));
+                    break;
+                }
+                return std::string();
+            }
         };
 
-        KeyPress(ActionType action, uint8_t character) : action(action), key(character){}
+        KeyPress(ActionType action, uint8_t character) : action(action), key(character) {}
         KeyPress(ActionType action, const MediaKeyReport *mediaKey) : action(action), key(mediaKey) {}
 
         ActionType action;
