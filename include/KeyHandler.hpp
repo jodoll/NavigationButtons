@@ -1,4 +1,4 @@
-#include "keymap/KeyMap.hpp"
+#include "keymap/Keyboard.hpp"
 #include "keymap/NoopKeyMap.hpp"
 #include "KeyboardEvent.hpp"
 #include "KeyboardWrapper.hpp"
@@ -9,21 +9,21 @@ class KeyHandler
 private:
     struct FutureKeyPress
     {
-        Keyboard::KeyPress::Key key;
+        Keyboard::Key key;
         unsigned long pressAfter;
     };
     
     static NoopKeyMap noopKeyMap;
     StatusLedController *ledController;
-    Keyboard::KeyMap *currentKeyMap = &noopKeyMap;
+    Keyboard::Map *currentKeyMap = &noopKeyMap;
     KeyboardWrapper wrapper;
     std::map<std::string, FutureKeyPress> repeatingKeys;
 
     unsigned long lastTick = 0;
     const int repeatingKeyDelayMs = 500;
 
-    void addRepeatingKey(Keyboard::KeyPress::Key &key);
-    void removeRepeatingKey(Keyboard::KeyPress::Key &key);
+    void addRepeatingKey(Keyboard::Key &key);
+    void removeRepeatingKey(Keyboard::Key &key);
 
 public:
     KeyHandler(StatusLedController &ledController) : ledController(&ledController) {};
@@ -32,7 +32,7 @@ public:
     ~KeyHandler();
 
     void connect();
-    void setKeyMap(Keyboard::KeyMap &keyMap);
+    void setKeyMap(Keyboard::Map &keyMap);
     void handle(KeyboardEvent::Event event);
     void tick();
 };

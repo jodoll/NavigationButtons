@@ -1,12 +1,11 @@
-#include "KeyMap.hpp"
+#include "keymap/Keyboard.hpp"
 
-
-class NoopKeyMap : public Keyboard::KeyMap
+class NoopKeyMap : public Keyboard::Map
 {
 private:
 public:
     NoopKeyMap() {};
     ~NoopKeyMap() {};
 
-    virtual std::vector<Keyboard::KeyPress> lookup(KeyboardEvent::Event event);
+    virtual std::vector<Keyboard::Press> lookup(KeyboardEvent::Event event);
 };

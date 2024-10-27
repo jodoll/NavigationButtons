@@ -9,7 +9,7 @@ void KeyHandler::connect()
     ledController->indicateSelectedKeyMap(3);
 }
 
-void KeyHandler::setKeyMap(Keyboard::KeyMap &keyMap)
+void KeyHandler::setKeyMap(Keyboard::Map &keyMap)
 {
     wrapper.releaseAll();
     currentKeyMap = &keyMap;
@@ -24,20 +24,20 @@ void KeyHandler::handle(KeyboardEvent::Event event)
     if (event.type < KeyboardEvent::Type::RELEASED)
         ledController->onKeyPressed();
     auto keyPresses = currentKeyMap->lookup(event);
-    for (Keyboard::KeyPress keyPress : keyPresses)
+    for (Keyboard::Press keyPress : keyPresses)
     {
         switch (keyPress.action)
         {
-        case Keyboard::KeyPress::ActionType::INSTANT:
+        case Keyboard::Press::Action::INSTANT:
             wrapper.sendKey(keyPress.key);
             break;
-        case Keyboard::KeyPress::ActionType::HOLD:
+        case Keyboard::Press::Action::HOLD:
             wrapper.pressKey(keyPress.key);
             break;
-        case Keyboard::KeyPress::ActionType::REPEATING:
+        case Keyboard::Press::Action::REPEATING:
             addRepeatingKey(keyPress.key);
             break;
-        case Keyboard::KeyPress::ActionType::RELEASE:
+        case Keyboard::Press::Action::RELEASE:
             removeRepeatingKey(keyPress.key);
             wrapper.releaseKey(keyPress.key);
             break;
@@ -66,7 +66,7 @@ void KeyHandler::tick()
     lastTick = now;
 }
 
-void KeyHandler::addRepeatingKey(Keyboard::KeyPress::Key &key)
+void KeyHandler::addRepeatingKey(Keyboard::Key &key)
 {
     std::string mapKey = key.asString();
     if (DEBUG)
@@ -75,7 +75,7 @@ void KeyHandler::addRepeatingKey(Keyboard::KeyPress::Key &key)
     repeatingKeys.insert({mapKey, futureKeyPress});
 }
 
-void KeyHandler::removeRepeatingKey(Keyboard::KeyPress::Key &key)
+void KeyHandler::removeRepeatingKey(Keyboard::Key &key)
 {
     std::string mapKey = key.asString();
     if (DEBUG)

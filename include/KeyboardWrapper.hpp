@@ -1,4 +1,4 @@
-#include "keymap/KeyMap.hpp"
+#include "keymap/Keyboard.hpp"
 #include "BleKeyboard.h"
 
 class KeyboardWrapper
@@ -8,8 +8,8 @@ private:
 
 public:
     void connect();
-    void pressKey(Keyboard::KeyPress::Key &key);
-    void sendKey(const Keyboard::KeyPress::Key &key);
-    void releaseKey(Keyboard::KeyPress::Key &key);
+    void pressKey(Keyboard::Key &key);
+    void sendKey(const Keyboard::Key &key);
+    void releaseKey(Keyboard::Key &key);
     void releaseAll();
 };

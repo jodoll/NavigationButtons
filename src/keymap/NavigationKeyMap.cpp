@@ -1,25 +1,25 @@
 #include "keymap/NavigationKeyMap.hpp"
 using namespace Keyboard;
 
-std::vector<Keyboard::KeyPress> NavigationKeyMap::lookup(KeyboardEvent::Event event)
+std::vector<Keyboard::Press> NavigationKeyMap::lookup(KeyboardEvent::Event event)
 {
-    KeyPress::ActionType actionType;
+    Press::Action actionType;
     switch (event.type)
     {
     case KeyboardEvent::Type::RELEASED:
-        actionType = KeyPress::ActionType::RELEASE;
+        actionType = Press::Action::RELEASE;
         break;
     case KeyboardEvent::Type::PRESSED:
-        actionType = KeyPress::ActionType::INSTANT;
+        actionType = Press::Action::INSTANT;
         break;
     case KeyboardEvent::Type::HOLD:
-        actionType = KeyPress::ActionType::REPEATING;
+        actionType = Press::Action::REPEATING;
         break;
     }
 
     if (event.key == KeyboardEvent::KeyCode::UP)
     {
-        return std::vector<Keyboard::KeyPress>({KeyPress(actionType, 'd')});
+        return std::vector<Keyboard::Press>({Press(actionType, 'd')});
     }
-    return std::vector<Keyboard::KeyPress>();
+    return std::vector<Keyboard::Press>();
 }
