@@ -1,6 +1,6 @@
 #include "keymap/Keyboard.hpp"
 #include "keymap/NoopKeyMap.hpp"
-#include "KeyboardEvent.hpp"
+#include "navigationPad/NavigationPad.hpp"
 #include "KeyboardWrapper.hpp"
 #include "led/StatusLedController.hpp"
 

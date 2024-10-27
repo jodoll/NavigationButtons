@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "Flags.hpp"
-#include "keypad/BarButtons.hpp"
+#include "navigationPad/BarButtons.hpp"
 #include "BleKeyboard.h"
 #include "keymap/NavigationKeyMap.hpp"
 

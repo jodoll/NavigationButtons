@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "BleKeyboard.h"
-#include "KeyboardEvent.hpp"
+#include "navigationPad/NavigationPad.hpp"
 
 #ifndef KEYMAP
 #define KEYMAP
