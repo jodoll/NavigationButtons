@@ -9,11 +9,11 @@ class KeypadKeyboard : public PhysicalKeyboard
 private:
     KeyHandler *keyHandler;
     Keypad keypad;
-    std::map<char, KeyboardEvent::KeyCode> keymap;
+    std::map<char, NavigationPad::KeyCode> keymap;
 
     void handleKey(Key &key);
 public:
-    KeypadKeyboard(KeyHandler &keyHandler, Keypad keypad, std::map<char, KeyboardEvent::KeyCode> keymap)
+    KeypadKeyboard(KeyHandler &keyHandler, Keypad keypad, std::map<char, NavigationPad::KeyCode> keymap)
         : keyHandler(&keyHandler), keypad(keypad), keymap(keymap)
     {
     }

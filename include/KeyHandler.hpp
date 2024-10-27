@@ -33,6 +33,6 @@ public:
 
     void connect();
     void setKeyMap(Keyboard::Map &keyMap);
-    void handle(KeyboardEvent::Event event);
+    void handle(NavigationPad::Event event);
     void tick();
 };

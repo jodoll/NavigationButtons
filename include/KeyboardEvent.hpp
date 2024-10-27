@@ -1,7 +1,7 @@
 #ifndef KEYBOARD_EVENT
 #define KEYBOARD_EVENT
 
-namespace KeyboardEvent
+namespace NavigationPad
 {
     enum KeyCode
     {
@@ -17,15 +17,15 @@ namespace KeyboardEvent
         DOWN,
     };
 
-    enum Type
-    {
-        RELEASED,
-        PRESSED,
-        HOLD
-    };
-
     struct Event
     {
+        enum Type
+        {
+            RELEASED,
+            PRESSED,
+            HOLD
+        };
+
         KeyCode key;
         Type type;
     };

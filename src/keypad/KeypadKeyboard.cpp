@@ -19,24 +19,24 @@ void KeypadKeyboard::handleKey(Key &key)
     auto iterator = keymap.find(key.kchar);
     if (iterator == keymap.end())
         return; // char not found in map (== configuration error)
-    KeyboardEvent::KeyCode keyCode = iterator->second;
+    NavigationPad::KeyCode keyCode = iterator->second;
 
     // map event type
-    KeyboardEvent::Type type;
+    NavigationPad::Event::Type type;
     switch (key.kstate)
     {
     case PRESSED:
-        type = KeyboardEvent::Type::PRESSED;
+        type = NavigationPad::Event::Type::PRESSED;
         break;
     case HOLD:
-        type = KeyboardEvent::Type::HOLD;
+        type = NavigationPad::Event::Type::HOLD;
         break;
     case RELEASED:
-        type = KeyboardEvent::Type::RELEASED;
+        type = NavigationPad::Event::Type::RELEASED;
         break;
     case IDLE:
         return;
     };
 
-    keyHandler->handle(KeyboardEvent::Event{keyCode, type});
+    keyHandler->handle(NavigationPad::Event{keyCode, type});
 }

@@ -8,5 +8,5 @@ public:
     NavigationKeyMap() {};
     ~NavigationKeyMap() {};
 
-    virtual std::vector<Keyboard::Press> lookup(KeyboardEvent::Event event);
+    virtual std::vector<Keyboard::Press> lookup(NavigationPad::Event event);
 };

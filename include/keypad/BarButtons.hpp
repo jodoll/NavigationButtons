@@ -14,15 +14,15 @@ namespace BarButtons
             {'2', '6', '7'},
             {'3', '8', '9'}};
 
-        std::map<char, KeyboardEvent::KeyCode> keymap = {
-            {'1', KeyboardEvent::PLUS},
-            {'2', KeyboardEvent::MINUS},
-            {'3', KeyboardEvent::ENTER},
-            {'4', KeyboardEvent::BACK},
-            {'5', KeyboardEvent::UP},
-            {'6', KeyboardEvent::LEFT},
-            {'7', KeyboardEvent::RIGHT},
-            {'8', KeyboardEvent::DOWN},
+        std::map<char, NavigationPad::KeyCode> keymap = {
+            {'1', NavigationPad::PLUS},
+            {'2', NavigationPad::MINUS},
+            {'3', NavigationPad::ENTER},
+            {'4', NavigationPad::BACK},
+            {'5', NavigationPad::UP},
+            {'6', NavigationPad::LEFT},
+            {'7', NavigationPad::RIGHT},
+            {'8', NavigationPad::DOWN},
         };
 
         // Assignment of pins (depending on how they are wried)

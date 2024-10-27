@@ -16,12 +16,12 @@ void KeyHandler::setKeyMap(Keyboard::Map &keyMap)
     ledController->indicateSelectedKeyMap(3);
 }
 
-void KeyHandler::handle(KeyboardEvent::Event event)
+void KeyHandler::handle(NavigationPad::Event event)
 {
     if (DEBUG)
         Serial.printf("Event: Type=%d, Key=%d\n", event.type, event.key);
 
-    if (event.type < KeyboardEvent::Type::RELEASED)
+    if (event.type < NavigationPad::Event::Type::RELEASED)
         ledController->onKeyPressed();
     auto keyPresses = currentKeyMap->lookup(event);
     for (Keyboard::Press keyPress : keyPresses)
@@ -43,7 +43,7 @@ void KeyHandler::handle(KeyboardEvent::Event event)
             break;
         }
     }
-    if (event.type == KeyboardEvent::Type::RELEASED)
+    if (event.type == NavigationPad::Event::Type::RELEASED)
         ledController->onKeyReleased();
 }
 

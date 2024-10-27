@@ -7,5 +7,5 @@ public:
     NoopKeyMap() {};
     ~NoopKeyMap() {};
 
-    virtual std::vector<Keyboard::Press> lookup(KeyboardEvent::Event event);
+    virtual std::vector<Keyboard::Press> lookup(NavigationPad::Event event);
 };

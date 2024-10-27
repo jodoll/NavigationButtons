@@ -47,7 +47,7 @@ namespace Keyboard
     private:
     public:
         virtual ~Map() {}
-        virtual std::vector<Press> lookup(KeyboardEvent::Event event) = 0;
+        virtual std::vector<Press> lookup(NavigationPad::Event event) = 0;
     };
 }
 

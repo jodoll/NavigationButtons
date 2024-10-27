@@ -1,6 +1,6 @@
 #include "keymap/NoopKeyMap.hpp"
 
-std::vector<Keyboard::Press> NoopKeyMap::lookup(KeyboardEvent::Event event)
+std::vector<Keyboard::Press> NoopKeyMap::lookup(NavigationPad::Event event)
 {
     return std::vector<Keyboard::Press>();
 }
