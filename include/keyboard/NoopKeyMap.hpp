@@ -1,4 +1,4 @@
-#include "keymap/Keyboard.hpp"
+#include "keyboard/Keyboard.hpp"
 
 class NoopKeyMap : public Keyboard::Map
 {

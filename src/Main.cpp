@@ -2,7 +2,7 @@
 #include "Flags.hpp"
 #include "navigationPad/BarButtons.hpp"
 #include "BleKeyboard.h"
-#include "keymap/NavigationKeyMap.hpp"
+#include "keyboard/NavigationKeyMap.hpp"
 
 StatusLedController ledController = StatusLedController(BarButtons::ledPin);
 KeyHandler keyHandler = KeyHandler(ledController);

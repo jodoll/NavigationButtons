@@ -1,4 +1,4 @@
-#include "keymap/Keyboard.hpp"
+#include "keyboard/Keyboard.hpp"
 
 
 class NavigationKeyMap : public Keyboard::Map

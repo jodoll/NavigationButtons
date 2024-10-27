@@ -1,4 +1,4 @@
-#include "keymap/NavigationKeyMap.hpp"
+#include "keyboard/NavigationKeyMap.hpp"
 using namespace Keyboard;
 
 std::vector<Keyboard::Press> NavigationKeyMap::lookup(NavigationPad::Event event)

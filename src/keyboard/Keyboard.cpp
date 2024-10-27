@@ -1,4 +1,4 @@
-#include "keymap/Keyboard.hpp"
+#include "keyboard/Keyboard.hpp"
 
 std::string Keyboard::Key::asString()
 {

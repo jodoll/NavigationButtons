@@ -1,5 +1,5 @@
-#include "keymap/Keyboard.hpp"
-#include "keymap/NoopKeyMap.hpp"
+#include "keyboard/Keyboard.hpp"
+#include "keyboard/NoopKeyMap.hpp"
 #include "navigationPad/NavigationPad.hpp"
 #include "KeyboardWrapper.hpp"
 #include "led/StatusLedController.hpp"

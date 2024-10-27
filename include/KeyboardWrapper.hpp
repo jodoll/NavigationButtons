@@ -1,4 +1,4 @@
-#include "keymap/Keyboard.hpp"
+#include "keyboard/Keyboard.hpp"
 #include "BleKeyboard.h"
 
 class KeyboardWrapper
