@@ -21,8 +21,14 @@ void KeyHandler::handle(NavigationPad::Event event)
     if (DEBUG)
         Serial.printf("Event: Type=%d, Key=%d\n", event.type, event.key);
 
-    if (event.type < NavigationPad::Event::Type::RELEASED)
+    if (event.type > NavigationPad::Event::Type::RELEASED)
+    {
         ledController->onKeyPressed();
+    }else{
+        ledController->onKeyReleased();
+        releaseKeys(event);
+    }
+
     auto keyPresses = currentKeyMap->lookup(event);
     for (Keyboard::Press keyPress : keyPresses)
     {
@@ -32,19 +38,26 @@ void KeyHandler::handle(NavigationPad::Event event)
             wrapper.sendKey(keyPress.key);
             break;
         case Keyboard::Press::Action::HOLD:
+            pressedKeys[event.key].insert(keyPress.key);
             wrapper.pressKey(keyPress.key);
             break;
         case Keyboard::Press::Action::REPEATING:
+            pressedKeys[event.key].insert(keyPress.key);
             addRepeatingKey(keyPress.key);
-            break;
-        case Keyboard::Press::Action::RELEASE:
-            removeRepeatingKey(keyPress.key);
-            wrapper.releaseKey(keyPress.key);
             break;
         }
     }
-    if (event.type == NavigationPad::Event::Type::RELEASED)
-        ledController->onKeyReleased();
+}
+
+void KeyHandler::releaseKeys(NavigationPad::Event &event)
+{
+    std::set<Keyboard::Key> &keys = pressedKeys[event.key];
+    for (Keyboard::Key key : keys)
+    {
+        removeRepeatingKey(key);
+        wrapper.releaseKey(key);
+    }
+    keys.clear();
 }
 
 void KeyHandler::tick()

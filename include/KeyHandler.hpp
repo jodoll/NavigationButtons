@@ -3,6 +3,7 @@
 #include "navigationPad/NavigationPad.hpp"
 #include "KeyboardWrapper.hpp"
 #include "led/StatusLedController.hpp"
+#include <set>
 
 class KeyHandler
 {
@@ -17,6 +18,7 @@ private:
     StatusLedController *ledController;
     Keyboard::KeyMap *currentKeyMap = &noopKeyMap;
     KeyboardWrapper wrapper;
+    std::map<NavigationPad::KeyCode, std::set<Keyboard::Key>> pressedKeys;
     std::map<std::string, FutureKeyPress> repeatingKeys;
 
     unsigned long lastTick = 0;
@@ -24,6 +26,7 @@ private:
 
     void addRepeatingKey(Keyboard::Key &key);
     void removeRepeatingKey(Keyboard::Key &key);
+    void releaseKeys(NavigationPad::Event &event);
 
 public:
     KeyHandler(StatusLedController &ledController) : ledController(&ledController) {};
