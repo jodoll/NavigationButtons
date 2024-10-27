@@ -9,7 +9,7 @@ void KeyHandler::connect()
     ledController->indicateSelectedKeyMap(3);
 }
 
-void KeyHandler::setKeyMap(Keyboard::Map &keyMap)
+void KeyHandler::setKeyMap(Keyboard::KeyMap &keyMap)
 {
     wrapper.releaseAll();
     currentKeyMap = &keyMap;

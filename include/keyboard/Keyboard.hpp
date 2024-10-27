@@ -42,11 +42,11 @@ namespace Keyboard
         Key key;
     };
 
-    class Map
+    class KeyMap
     {
     private:
     public:
-        virtual ~Map() {}
+        virtual ~KeyMap() {}
         virtual std::vector<Press> lookup(NavigationPad::Event event) = 0;
     };
 }

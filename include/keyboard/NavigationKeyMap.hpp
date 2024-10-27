@@ -1,7 +1,7 @@
 #include "keyboard/Keyboard.hpp"
 
 
-class NavigationKeyMap : public Keyboard::Map
+class NavigationKeyMap : public Keyboard::KeyMap
 {
 private:
 public:

@@ -1,6 +1,6 @@
 #include "keyboard/Keyboard.hpp"
 
-class NoopKeyMap : public Keyboard::Map
+class NoopKeyMap : public Keyboard::KeyMap
 {
 private:
 public:

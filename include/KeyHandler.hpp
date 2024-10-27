@@ -15,7 +15,7 @@ private:
     
     static NoopKeyMap noopKeyMap;
     StatusLedController *ledController;
-    Keyboard::Map *currentKeyMap = &noopKeyMap;
+    Keyboard::KeyMap *currentKeyMap = &noopKeyMap;
     KeyboardWrapper wrapper;
     std::map<std::string, FutureKeyPress> repeatingKeys;
 
@@ -32,7 +32,7 @@ public:
     ~KeyHandler();
 
     void connect();
-    void setKeyMap(Keyboard::Map &keyMap);
+    void setKeyMap(Keyboard::KeyMap &keyMap);
     void handle(NavigationPad::Event event);
     void tick();
 };
