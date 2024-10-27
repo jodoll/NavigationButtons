@@ -1,4 +1,4 @@
-#include "keyboard/KeypadKeyboard.hpp"
+#include "keypad/KeypadKeyboard.hpp"
 
 void KeypadKeyboard::scanKeys()
 {

@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#include "keyboard/KeypadKeyboard.hpp"
+#include "keypad/KeypadKeyboard.hpp"
 
 namespace BarButtons
 {
