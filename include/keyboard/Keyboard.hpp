@@ -17,28 +17,25 @@ namespace Keyboard
         };
 
         Key(uint8_t character)
-            : type(Type::SINGLE), character(character), stringRepresentation(std::string(1, character)) {}
+            : type(Type::SINGLE),
+              character(character),
+              textValue(std::string(1, character)) {}
         Key(const MediaKeyReport *mediaKey)
-            : type(Type::MEDIA), mediaKey(mediaKey)
-        {
-            stringRepresentation = std::to_string(reinterpret_cast<uintptr_t>(mediaKey));
-        }
+            : type(Type::MEDIA),
+              mediaKey(mediaKey),
+              textValue(std::to_string(reinterpret_cast<uintptr_t>(mediaKey))) {}
 
         Type type;
         uint8_t character = 0;
         const MediaKeyReport *mediaKey = nullptr;
+        const std::string textValue;
 
-        std::string asString()
+        bool operator<(const Key &other) const
         {
-            return stringRepresentation;
-        }
-
-        bool operator<(const Key &other) const{
-            return stringRepresentation < other.stringRepresentation;
+            return textValue < other.textValue;
         }
 
     private:
-        std::string stringRepresentation;
     };
 
     struct Press

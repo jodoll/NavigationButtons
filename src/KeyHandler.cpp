@@ -81,17 +81,15 @@ void KeyHandler::tick()
 
 void KeyHandler::addRepeatingKey(Keyboard::Key &key)
 {
-    std::string mapKey = key.asString();
     if (DEBUG)
-        Serial.printf("Inserting key %c\n", mapKey.c_str());
+        Serial.printf("Inserting key %s\n", key.textValue.c_str());
     FutureKeyPress futureKeyPress = {key, millis()};
-    repeatingKeys.insert({mapKey, futureKeyPress});
+    repeatingKeys.insert({key, futureKeyPress});
 }
 
 void KeyHandler::removeRepeatingKey(Keyboard::Key &key)
 {
-    std::string mapKey = key.asString();
     if (DEBUG)
-        Serial.printf("Removing key %s\n", mapKey.c_str());
-    repeatingKeys.erase(mapKey);
+        Serial.printf("Removing key %s\n", key.textValue.c_str());
+    repeatingKeys.erase(key);
 }

@@ -19,7 +19,7 @@ private:
     Keyboard::KeyMap *currentKeyMap = &noopKeyMap;
     KeyboardWrapper wrapper;
     std::map<NavigationPad::KeyCode, std::set<Keyboard::Key>> pressedKeys;
-    std::map<std::string, FutureKeyPress> repeatingKeys;
+    std::map<Keyboard::Key, FutureKeyPress> repeatingKeys;
 
     unsigned long lastTick = 0;
     const int repeatingKeyDelayMs = 500;
