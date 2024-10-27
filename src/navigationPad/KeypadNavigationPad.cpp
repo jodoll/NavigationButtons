@@ -1,6 +1,6 @@
-#include "navigationPad/KeypadKeyboard.hpp"
+#include "navigationPad/KeypadNavigationPad.hpp"
 
-void KeypadKeyboard::scanKeys()
+void KeypadNavigationPad::scanKeys()
 {
     if (!keypad.getKeys())
         return;
@@ -11,7 +11,7 @@ void KeypadKeyboard::scanKeys()
     }
 }
 
-void KeypadKeyboard::handleKey(Key &key)
+void KeypadNavigationPad::handleKey(Key &key)
 {
     if (!key.stateChanged)
         return;

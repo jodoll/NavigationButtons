@@ -1,10 +1,10 @@
 #include <stdint.h>
 
-class PhysicalKeyboard
+class PhysicalNavigationPad
 {
 private:
 
 public:
-    virtual ~PhysicalKeyboard() {}
+    virtual ~PhysicalNavigationPad() {}
     virtual void scanKeys() = 0;
 };

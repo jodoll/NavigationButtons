@@ -1,10 +1,10 @@
 #include "Arduino.h"
-#include "PhysicalKeyboard.hpp"
+#include "navigationPad/PhysicalNavigationPad.hpp"
 #include "Keypad.h"
 #include "KeyHandler.hpp"
 #include <map>
 
-class KeypadKeyboard : public PhysicalKeyboard
+class KeypadNavigationPad : public PhysicalNavigationPad
 {
 private:
     KeyHandler *keyHandler;
@@ -13,7 +13,7 @@ private:
 
     void handleKey(Key &key);
 public:
-    KeypadKeyboard(KeyHandler &keyHandler, Keypad keypad, std::map<char, NavigationPad::KeyCode> keymap)
+    KeypadNavigationPad(KeyHandler &keyHandler, Keypad keypad, std::map<char, NavigationPad::KeyCode> keymap)
         : keyHandler(&keyHandler), keypad(keypad), keymap(keymap)
     {
     }

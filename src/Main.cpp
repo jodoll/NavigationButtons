@@ -6,8 +6,8 @@
 
 StatusLedController ledController = StatusLedController(BarButtons::ledPin);
 KeyHandler keyHandler = KeyHandler(ledController);
-KeypadKeyboard keypadKeyboard = BarButtons::keypad(keyHandler);
-PhysicalKeyboard& keyboard = keypadKeyboard;
+KeypadNavigationPad keypadKeyboard = BarButtons::keypad(keyHandler);
+PhysicalNavigationPad& keyboard = keypadKeyboard;
 
 NavigationKeyMap navigationKeyMap;
 

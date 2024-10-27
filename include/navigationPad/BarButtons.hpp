@@ -1,10 +1,10 @@
 #include "Arduino.h"
-#include "navigationPad/KeypadKeyboard.hpp"
+#include "navigationPad/KeypadNavigationPad.hpp"
 
 namespace BarButtons
 {
     const uint8_t ledPin = 6;
-    KeypadKeyboard keypad(KeyHandler &handler)
+    KeypadNavigationPad keypad(KeyHandler &handler)
     {
         // Keypad library settings
         static const byte ROWS = 3;
@@ -31,6 +31,6 @@ namespace BarButtons
         byte colPins[ROWS] = {3, 4, 5}; // Keypad pins, left to right
 
         Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
-        return KeypadKeyboard(handler, keypad, keymap);
+        return KeypadNavigationPad(handler, keypad, keymap);
     }
 }
