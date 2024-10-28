@@ -1,7 +1,7 @@
 #include "Arduino.h"
-#include "BleKeyboard.h"
 #include "navigationPad/NavigationPad.hpp"
 #include "keyboard/MediaKey.hpp"
+#include <vector>
 
 #ifndef KEYBOARD
 #define KEYBOARD
@@ -10,7 +10,6 @@ namespace Keyboard
 {
     struct Key
     {
-    public:
         enum Type
         {
             SINGLE,
@@ -21,22 +20,20 @@ namespace Keyboard
             : type(Type::SINGLE),
               character(character),
               textValue(std::string(1, character)) {}
-        Key(const MediaKeyReport *mediaKey)
+        Key(const MediaKeyCode mediaKey)
             : type(Type::MEDIA),
               mediaKey(mediaKey),
               textValue(mediaKeyReportToText(mediaKey)) {}
 
         Type type;
         uint8_t character = 0;
-        const MediaKeyReport *mediaKey = nullptr;
+        const MediaKeyCode mediaKey = MediaKeyCode::POWER;
         const std::string textValue;
 
         bool operator<(const Key &other) const
         {
             return textValue < other.textValue;
         }
-
-    private:
     };
 
     struct Press
@@ -50,7 +47,7 @@ namespace Keyboard
         };
 
         Press(Action action, uint8_t character) : action(action), key(character) {}
-        Press(Action action, const MediaKeyReport *mediaKey) : action(action), key(mediaKey) {}
+        Press(Action action, const MediaKeyCode mediaKey) : action(action), key(mediaKey) {}
 
         Action action;
         Key key;

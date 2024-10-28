@@ -5,6 +5,7 @@ class KeyboardWrapper
 {
 private:
     BleKeyboard bleKeyboard = BleKeyboard("NavigationButtons", "jodoll", 100);
+    const MediaKeyReport* toMediaKeyReport(const MediaKeyCode &mediaKey);
 
 public:
     void connect();
