@@ -35,11 +35,11 @@ void KeyHandler::handle(NavigationPad::Event event)
         switch (keyPress.action)
         {
         case Keyboard::Press::Action::INSTANT:
-            wrapper.sendKey(keyPress.key);
+            wrapper.writeKey(keyPress.key);
             break;
         case Keyboard::Press::Action::HOLD:
             pressedKeys[event.key].insert(keyPress.key);
-            wrapper.pressKey(keyPress.key);
+            wrapper.holdKey(keyPress.key);
             break;
         case Keyboard::Press::Action::REPEATING:
             pressedKeys[event.key].insert(keyPress.key);
@@ -73,7 +73,7 @@ void KeyHandler::tick()
         {
             auto remainingTimeToNextPress = repeatingKeyDelayMs - ((now - futurePress.pressAfter) % repeatingKeyDelayMs);
             futurePress.pressAfter += remainingTimeToNextPress;
-            wrapper.sendKey(futurePress.key);
+            wrapper.writeKey(futurePress.key);
         }
     };
     lastTick = now;

@@ -9,8 +9,8 @@ private:
 
 public:
     void connect();
-    void pressKey(Keyboard::Key &key);
-    void sendKey(const Keyboard::Key &key);
+    void writeKey(const Keyboard::Key &key);
+    void holdKey(Keyboard::Key &key);
     void releaseKey(Keyboard::Key &key);
     void releaseAll();
 };

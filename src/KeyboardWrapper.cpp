@@ -45,20 +45,7 @@ void KeyboardWrapper::connect()
     bleKeyboard.begin();
 }
 
-void KeyboardWrapper::pressKey(Keyboard::Key &key)
-{
-    switch (key.type)
-    {
-    case Keyboard::Key::Type::SINGLE:
-        bleKeyboard.press(key.character);
-        break;
-    case Keyboard::Key::Type::MEDIA:
-        bleKeyboard.press(*toMediaKeyReport(key.mediaKey));
-        break;
-    }
-}
-
-void KeyboardWrapper::sendKey(const Keyboard::Key &key)
+void KeyboardWrapper::writeKey(const Keyboard::Key &key)
 {
     switch (key.type)
     {
@@ -74,6 +61,24 @@ void KeyboardWrapper::sendKey(const Keyboard::Key &key)
         break;
     }
 }
+
+void KeyboardWrapper::holdKey(Keyboard::Key &key)
+{
+    switch (key.type)
+    {
+    case Keyboard::Key::Type::SINGLE:
+        bleKeyboard.press(key.character);
+        if (DEBUG)
+            Serial.printf("Writing Key %c\n", key.character);
+        break;
+    case Keyboard::Key::Type::MEDIA:
+        bleKeyboard.press(*toMediaKeyReport(key.mediaKey));
+        if (DEBUG)
+            Serial.printf("Writing MediaKey %s\n", key.textValue.c_str());
+        break;
+    }
+}
+
 
 void KeyboardWrapper::releaseKey(Keyboard::Key &key)
 {
