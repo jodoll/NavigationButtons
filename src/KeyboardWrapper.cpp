@@ -30,7 +30,7 @@ void KeyboardWrapper::sendKey(const Keyboard::Key &key)
     case Keyboard::Key::Type::MEDIA:
         bleKeyboard.write(*key.mediaKey);
         if (DEBUG)
-            Serial.println("Sending MediaKey");
+            Serial.printf("Sending MediaKey %s\n", key.textValue.c_str());
         break;
     }
 }
