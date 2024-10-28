@@ -9,7 +9,7 @@ private:
 
 public:
     StatusLedController(uint8_t pin);
-    ~StatusLedController();
+    ~StatusLedController(){};
 
     void onKeyPressed();
     void onKeyReleased();

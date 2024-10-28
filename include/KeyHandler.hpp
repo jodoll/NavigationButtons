@@ -32,7 +32,7 @@ public:
     KeyHandler(StatusLedController &ledController) : ledController(&ledController) {};
     KeyHandler(StatusLedController &ledController, int repeatingKeyDelayMs)
         : ledController(&ledController), repeatingKeyDelayMs(repeatingKeyDelayMs) {};
-    ~KeyHandler();
+    ~KeyHandler(){};
 
     void connect();
     void setKeyMap(Keyboard::KeyMap &keyMap);
