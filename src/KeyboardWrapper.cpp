@@ -1,9 +1,9 @@
 #include "KeyboardWrapper.hpp"
 
-void KeyboardWrapper::connect(){
+void KeyboardWrapper::connect()
+{
     bleKeyboard.begin();
 }
-
 
 void KeyboardWrapper::pressKey(Keyboard::Key &key)
 {

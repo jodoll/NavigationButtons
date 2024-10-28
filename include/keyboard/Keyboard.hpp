@@ -1,9 +1,10 @@
 #include "Arduino.h"
 #include "BleKeyboard.h"
 #include "navigationPad/NavigationPad.hpp"
+#include "keyboard/MediaKey.hpp"
 
-#ifndef KEYMAP
-#define KEYMAP
+#ifndef KEYBOARD
+#define KEYBOARD
 
 namespace Keyboard
 {
@@ -23,7 +24,7 @@ namespace Keyboard
         Key(const MediaKeyReport *mediaKey)
             : type(Type::MEDIA),
               mediaKey(mediaKey),
-              textValue(std::to_string(reinterpret_cast<uintptr_t>(mediaKey))) {}
+              textValue(mediaKeyReportToText(mediaKey)) {}
 
         Type type;
         uint8_t character = 0;
