@@ -48,6 +48,7 @@ namespace Keyboard
 
         Press(Action action, uint8_t character) : action(action), key(character) {}
         Press(Action action, const MediaKeyCode mediaKey) : action(action), key(mediaKey) {}
+        Press(Action action, Key key) : action(action), key(key) {}
 
         Action action;
         Key key;
