@@ -1,6 +1,6 @@
 #include "KeyboardWrapper.hpp"
 
-const MediaKeyReport* KeyboardWrapper::toMediaKeyReport(const MediaKeyCode &mediaKey)
+const MediaKeyReport *KeyboardWrapper::toMediaKeyReport(const MediaKeyCode &mediaKey)
 {
     switch (mediaKey)
     {
@@ -40,6 +40,57 @@ const MediaKeyReport* KeyboardWrapper::toMediaKeyReport(const MediaKeyCode &medi
     }
 }
 
+// MediaReportKey
+std::string KeyboardWrapper::MediaReportKey::asText()
+{
+    return text;
+}
+void KeyboardWrapper::MediaReportKey::writeKey(BleKeyboard &keyboard)
+{
+    keyboard.write(*report);
+}
+void KeyboardWrapper::MediaReportKey::holdKey(BleKeyboard &keyboard)
+{
+    keyboard.press(*report);
+}
+void KeyboardWrapper::MediaReportKey::releaseKey(BleKeyboard &keyboard)
+{
+    keyboard.release(*report);
+}
+
+// CharKey
+std::string KeyboardWrapper::CharKey::asText()
+{
+    return text;
+}
+void KeyboardWrapper::CharKey::writeKey(BleKeyboard &keyboard)
+{
+    keyboard.write(character);
+}
+void KeyboardWrapper::CharKey::holdKey(BleKeyboard &keyboard)
+{
+    keyboard.press(character);
+}
+void KeyboardWrapper::CharKey::releaseKey(BleKeyboard &keyboard)
+{
+    keyboard.release(character);
+}
+
+// KeboardWrapper
+std::shared_ptr<KeyboardWrapper::BleKey> KeyboardWrapper::toBleKey(const Keyboard::Key &key)
+{
+    switch (key.type)
+    {
+    case Keyboard::Key::Type::MEDIA:
+        return std::static_pointer_cast<KeyboardWrapper::BleKey>(
+            std::make_shared<KeyboardWrapper::MediaReportKey>(key.mediaKey, key.textValue));
+    case Keyboard::Key::Type::SINGLE:
+    default:
+        return std::static_pointer_cast<KeyboardWrapper::BleKey>(
+            std::make_shared<KeyboardWrapper::CharKey>(key.character));
+    }
+}
+
 void KeyboardWrapper::connect()
 {
     bleKeyboard.begin();
@@ -47,53 +98,31 @@ void KeyboardWrapper::connect()
 
 void KeyboardWrapper::writeKey(const Keyboard::Key &key)
 {
-    switch (key.type)
-    {
-    case Keyboard::Key::Type::SINGLE:
-        bleKeyboard.write(key.character);
-        if (DEBUG)
-            Serial.printf("Sending Key %c\n", key.character);
-        break;
-    case Keyboard::Key::Type::MEDIA:
-        bleKeyboard.write(*toMediaKeyReport(key.mediaKey));
-        if (DEBUG)
-            Serial.printf("Sending MediaKey %s\n", key.textValue.c_str());
-        break;
-    }
+    auto bleKey = toBleKey(key);
+    bleKey->writeKey(bleKeyboard);
+    if (DEBUG)
+        Serial.printf("Writing Key %s\n", bleKey->asText().c_str());
 }
 
 void KeyboardWrapper::holdKey(Keyboard::Key &key)
 {
-    switch (key.type)
-    {
-    case Keyboard::Key::Type::SINGLE:
-        bleKeyboard.press(key.character);
-        if (DEBUG)
-            Serial.printf("Writing Key %c\n", key.character);
-        break;
-    case Keyboard::Key::Type::MEDIA:
-        bleKeyboard.press(*toMediaKeyReport(key.mediaKey));
-        if (DEBUG)
-            Serial.printf("Writing MediaKey %s\n", key.textValue.c_str());
-        break;
-    }
+    auto bleKey = toBleKey(key);
+    bleKey->holdKey(bleKeyboard);
+    if (DEBUG)
+        Serial.printf("Holding Key %s down\n", bleKey->asText().c_str());
 }
-
 
 void KeyboardWrapper::releaseKey(Keyboard::Key &key)
 {
-    switch (key.type)
-    {
-    case Keyboard::Key::Type::SINGLE:
-        bleKeyboard.release(key.character);
-        break;
-    case Keyboard::Key::Type::MEDIA:
-        bleKeyboard.release(*toMediaKeyReport(key.mediaKey));
-        break;
-    }
+    auto bleKey = toBleKey(key);
+    bleKey->releaseKey(bleKeyboard);
+    if (DEBUG)
+        Serial.printf("Releasing Key %s\n", bleKey->asText().c_str());
 }
 
 void KeyboardWrapper::releaseAll()
 {
     bleKeyboard.releaseAll();
+    if (DEBUG)
+        Serial.println("Releasing all keys");
 }

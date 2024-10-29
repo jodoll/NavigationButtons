@@ -12,12 +12,16 @@ std::vector<Keyboard::Press> NavigationKeyMap::lookup(NavigationPad::Event event
     case NavigationPad::Event::Type::HOLD:
         actionType = Press::Action::REPEATING;
         break;
+    case NavigationPad::Event::RELEASED:
+        return std::vector<Keyboard::Press>();
     }
 
     if (event.key == NavigationPad::KeyCode::UP)
     {
         return std::vector<Keyboard::Press>({Press(actionType, 'd')});
-    }else if(event.key == NavigationPad::KeyCode::RIGHT){
+    }
+    else if (event.key == NavigationPad::KeyCode::RIGHT)
+    {
         return std::vector<Keyboard::Press>({Press(actionType, MediaKeyCode::CALCULATOR)});
     }
     return std::vector<Keyboard::Press>();
