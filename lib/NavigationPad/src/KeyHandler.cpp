@@ -63,7 +63,7 @@ void KeyHandler::releaseKeys(NavigationPad::Event &event)
 
 void KeyHandler::tick()
 {
-    auto now = millis();
+    auto now = clock->currentTimeMillis();
     if (now < lastTick + 20)
         return;
 
@@ -83,7 +83,7 @@ void KeyHandler::tick()
 void KeyHandler::addRepeatingKey(Keyboard::Key &key)
 {
     Log.verboseln("Inserting key %s", key.textValue.c_str());
-    FutureKeyPress futureKeyPress = {key, millis()};
+    FutureKeyPress futureKeyPress = {key, clock->currentTimeMillis()};
     repeatingKeys.insert({key, futureKeyPress});
 }
 

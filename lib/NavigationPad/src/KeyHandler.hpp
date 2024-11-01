@@ -3,6 +3,7 @@
 #include "navigationPad/NavigationPad.hpp"
 #include "KeyboardWrapper.hpp"
 #include "led/StatusLedController.hpp"
+#include "clock/SystemClock.hpp"
 #include <set>
 
 class KeyHandler
@@ -15,9 +16,10 @@ private:
     };
 
     static NoopKeyMap noopKeyMap;
-    StatusLedController *ledController;
     Keyboard::KeyMap *currentKeyMap = &noopKeyMap;
+    StatusLedController *ledController;
     KeyboardWrapper *wrapper;
+    Clock *clock = &systemClock;
     std::map<NavigationPad::KeyCode, std::set<Keyboard::Key>> pressedKeys;
     std::map<Keyboard::Key, FutureKeyPress> repeatingKeys;
 
