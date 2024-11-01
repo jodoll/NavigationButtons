@@ -1,4 +1,4 @@
-#include "Arduino.h"
+#include <cstdint>
 #include "navigationPad/KeypadNavigationPad.hpp"
 
 namespace BarButtons
@@ -26,7 +26,6 @@ namespace BarButtons
         };
 
         // Assignment of pins (depending on how they are wried)
-        static const int LED_PIN = 6;   // Status led
         byte rowPins[COLS] = {2, 1, 0}; // Keypad pins, top to bottom
         byte colPins[ROWS] = {3, 4, 5}; // Keypad pins, left to right
 

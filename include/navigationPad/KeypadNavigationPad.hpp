@@ -1,4 +1,3 @@
-#include "Arduino.h"
 #include "navigationPad/PhysicalNavigationPad.hpp"
 #include "Keypad.h"
 #include "KeyHandler.hpp"

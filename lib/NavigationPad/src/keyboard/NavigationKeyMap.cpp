@@ -1,5 +1,5 @@
 #include "keyboard/NavigationKeyMap.hpp"
-#include "BleKeyboard.h"
+#include "keyboard/KeyCodes.hpp"
 
 using namespace Keyboard;
 
@@ -54,7 +54,6 @@ std::vector<Keyboard::Press> NavigationKeyMap::hold(NavigationPad::Event::Type a
 
 std::vector<Keyboard::Press> NavigationKeyMap::alternative(NavigationPad::Event::Type action, Key shortPress, Key longPress)
 {
-    Press::Action actionType;
     switch (action)
     {
     case NavigationPad::Event::Type::HOLD:
@@ -73,21 +72,21 @@ std::vector<Keyboard::Press> NavigationKeyMap::lookup(NavigationPad::Event event
 {
     switch (event.key)
     {
-    case NavigationPad::KeyCode::PLUS:
+    case NavigationPad::PLUS:
         return repeating(event.type, '+');
-    case NavigationPad::KeyCode::MINUS:
+    case NavigationPad::MINUS:
         return repeating(event.type, '-');
-    case NavigationPad::KeyCode::ENTER:
+    case NavigationPad::ENTER:
         return alternative(event.type, 'N', 'D');
-    case NavigationPad::KeyCode::BACK:
+    case NavigationPad::BACK:
         return single(event.type, 'C');
-    case NavigationPad::KeyCode::UP:
+    case NavigationPad::UP:
         return repeating(event.type, KEY_UP_ARROW);
-    case NavigationPad::KeyCode::LEFT:
+    case NavigationPad::LEFT:
         return repeating(event.type, KEY_LEFT_ARROW);
-    case NavigationPad::KeyCode::RIGHT:
+    case NavigationPad::RIGHT:
         return repeating(event.type, KEY_RIGHT_ARROW);
-    case NavigationPad::KeyCode::DOWN:
+    case NavigationPad::DOWN:
         return repeating(event.type, KEY_DOWN_ARROW);
     default:
         return std::vector<Press>();

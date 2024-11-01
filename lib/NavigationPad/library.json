@@ -1,0 +1,28 @@
+{
+    "$schema": "https://raw.githubusercontent.com/platformio/platformio-core/develop/platformio/assets/schema/library.json",
+    "name": "NavigationPad",
+    "version": "0.1.0",
+    "authors":
+    [
+      {
+          "name": "jodoll",
+          "maintainer": true
+      }
+    ],
+    "frameworks": "*",
+    "platforms": "*",
+    "dependencies":[
+        {
+            "owner": "thijse",
+            "name": "ArduinoLog",
+            "version": "^1.1.1"
+        }
+    ],
+    "build": {
+        "flags":[
+            "-lArduinoLog"
+        ],
+        "libLDFMode":"chain+"
+    }
+  }
+  

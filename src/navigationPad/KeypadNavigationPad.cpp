@@ -35,6 +35,7 @@ void KeypadNavigationPad::handleKey(Key &key)
         type = NavigationPad::Event::Type::RELEASED;
         break;
     case IDLE:
+    default:
         return;
     };
 

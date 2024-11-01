@@ -1,7 +1,6 @@
 #include "KeyHandler.hpp"
 #include "ArduinoLog.h"
 
-
 NoopKeyMap KeyHandler::noopKeyMap = NoopKeyMap();
 
 void KeyHandler::connect()
