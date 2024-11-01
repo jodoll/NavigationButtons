@@ -1,6 +1,6 @@
 #include "KeyHandler.hpp"
-#include "Flags.hpp"
-#include "HardwareSerial.h"
+#include "ArduinoLog.h"
+
 
 NoopKeyMap KeyHandler::noopKeyMap = NoopKeyMap();
 
@@ -19,13 +19,14 @@ void KeyHandler::setKeyMap(Keyboard::KeyMap &keyMap)
 
 void KeyHandler::handle(NavigationPad::Event event)
 {
-    if (DEBUG)
-        Serial.printf("Event: Type=%d, Key=%d\n", event.type, event.key);
+    Log.traceln("Event: Type=%d, Key=%d", event.type, event.key);
 
     if (event.type > NavigationPad::Event::Type::RELEASED)
     {
         ledController->onKeyPressed();
-    }else{
+    }
+    else
+    {
         ledController->onKeyReleased();
         releaseKeys(event);
     }
@@ -82,15 +83,13 @@ void KeyHandler::tick()
 
 void KeyHandler::addRepeatingKey(Keyboard::Key &key)
 {
-    if (DEBUG)
-        Serial.printf("Inserting key %s\n", key.textValue.c_str());
+    Log.verboseln("Inserting key %s", key.textValue.c_str());
     FutureKeyPress futureKeyPress = {key, millis()};
     repeatingKeys.insert({key, futureKeyPress});
 }
 
 void KeyHandler::removeRepeatingKey(Keyboard::Key &key)
 {
-    if (DEBUG)
-        Serial.printf("Removing key %s\n", key.textValue.c_str());
+    Log.verboseln("Removing key %s", key.textValue.c_str());
     repeatingKeys.erase(key);
 }

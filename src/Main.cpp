@@ -5,6 +5,7 @@
 #include "keyboard/NavigationKeyMap.hpp"
 #include "bleKeyboard/BleKeyboardWrapper.hpp"
 #include "led/SingleColorStatusLedController.hpp"
+#include "ArduinoLog.h"
 
 BleKeyboardWrapper keyboardWrapper = BleKeyboardWrapper();
 SingleColorStatusLedController ledController = SingleColorStatusLedController(BarButtons::ledPin);
@@ -16,13 +17,14 @@ NavigationKeyMap navigationKeyMap;
 
 void setup()
 {
-    if (DEBUG)
+    if (BUILD_DEBUG)
     {
         // Might block until serial is actually connected in debug mode
         // Depends on the board, known boards to block:
         // Liolin C3
         Serial.begin(9600);
         Serial.println("Serial Connected");
+        Log.begin(LOG_LEVEL_TRACE, &Serial);
     }
     keyHandler.connect();
     keyHandler.setKeyMap(navigationKeyMap);
@@ -37,7 +39,7 @@ void setup()
     // // Enable the led to indicate we're switched on
 
     // // End of setup()
-    // if (DEBUG)
+    // if (BUILD_DEBUG)
     // {
     //     Serial.println("Good to go!");
     // }

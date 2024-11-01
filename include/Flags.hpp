@@ -1,3 +1,3 @@
-#ifndef DEBUG
-#define DEBUG 0
+#ifndef BUILD_DEBUG
+#define BUILD_DEBUG 0
 #endif

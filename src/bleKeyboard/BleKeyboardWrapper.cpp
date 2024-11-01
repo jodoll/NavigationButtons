@@ -1,5 +1,5 @@
 #include "bleKeyboard/BleKeyboardWrapper.hpp"
-#include "HardwareSerial.h"
+#include "ArduinoLog.h"
 
 const MediaKeyReport *BleKeyboardWrapper::toMediaKeyReport(const MediaKeyCode &mediaKey)
 {
@@ -101,29 +101,25 @@ void BleKeyboardWrapper::writeKey(const Keyboard::Key &key)
 {
     auto bleKey = toBleKey(key);
     bleKey->writeKey(bleKeyboard);
-    if (DEBUG)
-        Serial.printf("Writing Key %s\n", bleKey->asText().c_str());
+    Log.infoln("Writing Key %s", bleKey->asText().c_str());
 }
 
 void BleKeyboardWrapper::holdKey(Keyboard::Key &key)
 {
     auto bleKey = toBleKey(key);
     bleKey->holdKey(bleKeyboard);
-    if (DEBUG)
-        Serial.printf("Holding Key %s down\n", bleKey->asText().c_str());
+    Log.infoln("Holding Key %s down", bleKey->asText().c_str());
 }
 
 void BleKeyboardWrapper::releaseKey(Keyboard::Key &key)
 {
     auto bleKey = toBleKey(key);
     bleKey->releaseKey(bleKeyboard);
-    if (DEBUG)
-        Serial.printf("Releasing Key %s\n", bleKey->asText().c_str());
+    Log.infoln("Releasing Key %s", bleKey->asText().c_str());
 }
 
 void BleKeyboardWrapper::releaseAll()
 {
     bleKeyboard.releaseAll();
-    if (DEBUG)
-        Serial.println("Releasing all keys");
+    Log.infoln("Releasing all keys");
 }
