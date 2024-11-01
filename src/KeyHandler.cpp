@@ -1,5 +1,6 @@
 #include "KeyHandler.hpp"
 #include "Flags.hpp"
+#include "HardwareSerial.h"
 
 NoopKeyMap KeyHandler::noopKeyMap = NoopKeyMap();
 

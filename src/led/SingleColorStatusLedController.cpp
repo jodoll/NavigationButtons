@@ -1,40 +1,41 @@
-#include "led/StatusLedController.hpp"
+#include "led/SingleColorStatusLedController.hpp"
+#include "Arduino.h"
 
 const int keyMapSelectedPulseDurationMs = 300;
 
-StatusLedController::StatusLedController(uint8_t pin)
+SingleColorStatusLedController::SingleColorStatusLedController(uint8_t pin)
 {
     this->pin = pin;
     pinMode(pin, OUTPUT);
 }
 
-void StatusLedController::turnOn()
+void SingleColorStatusLedController::turnOn()
 {
     currentState = HIGH;
     digitalWrite(pin, HIGH);
 }
 
-void StatusLedController::turnOff()
+void SingleColorStatusLedController::turnOff()
 {
     currentState = LOW;
     digitalWrite(pin, LOW);
 }
 
-void StatusLedController::onKeyPressed()
+void SingleColorStatusLedController::onKeyPressed()
 {
     if (isInMenu)
         return;
     turnOn();
 }
 
-void StatusLedController::onKeyReleased()
+void SingleColorStatusLedController::onKeyReleased()
 {
     if (isInMenu)
         return;
     turnOff();
 }
 
-void StatusLedController::indicateSelectedKeyMap(uint8_t keyMapNr)
+void SingleColorStatusLedController::indicateSelectedKeyMap(uint8_t keyMapNr)
 {
     boolean previousState = currentState;
     if (currentState == HIGH)
