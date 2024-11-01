@@ -19,10 +19,6 @@
         }
     ],
     "build": {
-        "flags":[
-            "-lArduinoLog"
-        ],
-        "libLDFMode":"chain+"
     }
   }
   
