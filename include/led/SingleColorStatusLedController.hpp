@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include "led/StatusLedController.hpp"
 
-class SingleColorStatusLedController: public StatusLedController
+class SingleColorStatusLedController : public StatusLedController
 {
 private:
     bool currentState = LOW;
@@ -15,8 +15,9 @@ public:
     void onKeyPressed() override;
     void onKeyReleased() override;
     void indicateSelectedKeyMap(uint8_t keyMapNr) override;
-    void onMenuEntered() override;
-    void onMenuLeft() override;
+    void onMenuEntered() override {};
+    void onMenuLeft() override {};
+
     void turnOn() override;
     void turnOff() override;
 };
