@@ -34,15 +34,23 @@ To get a nicer serial terminal, you might want to try Microsofts [Serial Monitor
 # Credits
 All credit for used libraries goes to the original creators.
 
-The Currently used libraries and frameworks are:
+The currently used libraries and frameworks are:
 * [ESP32-BLE-Keyboard](https://github.com/T-vK/ESP32-BLE-Keyboard) by T-vK and Contributors
     * This library has been modified, check [git/GitHub](https://github.com/jodoll/NavigationButtons/commits/main/lib/ESP32-BLE-Keyboard%400.3.2-beta) for the changes (the Initial commit contains the Library as obtained from [GitHub](https://github.com/T-vK/ESP32-BLE-Keyboard/releases/download/0.3.2-beta/ESP32-BLE-Keyboard.zip))
+    * The changes include some fixes and some changes to the media key report, to support different keys
 * [Keypad](https://github.com/Chris--A/Keypad) by Mark Stanley, Alexander Brevig
+* [ArduinoLog](https://github.com/thijse/Arduino-Log) by Thijs Elenbaas, MrRobot62, rahuldeo2047, NOX73, dhylands, Josha, blemasle, mfalkvidd
+    * This library has been modified, check [git/GitHub](https://github.com/jodoll/NavigationButtons/commits/main/lib/ArduinoLog) for the changes (the first commited version is v1.1.1, as obtained through the PlatformIO package manager)
+    * The changes allow the log statements to stay in the code on the `native` platform for tests (while doing nothing when called)
 * [Arduino ESP32](https://github.com/espressif/arduino-esp32) by espressif
 * [The Arduino Framework](https://www.arduino.cc/)
 
 For development:
 * [Platform IO](https://platformio.org/)
 * [Wokwi](https://wokwi.com/)
+
+For testing:
+* [GoogleTest](https://github.com/google/googletest/) by Google
+
 
 Special thanks goes to [JaxeAdv](https://jaxeadv.com/) for his awesome [BarButtons](https://jaxeadv.com/barButtons) project that inspired this project. All credits for anything BarButtons related (hardware and software wise) go to him.
