@@ -16,7 +16,10 @@ Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 #include <stdarg.h>
 
 // Non standard: Arduino.h also chosen if ARDUINO is not defined. To facilitate use in non-Arduino test environments
-#if ARDUINO < 100
+#ifndef ARDUINO
+#define DISABLE_LOGGING
+class Print{};
+#elif ARDUINO < 100
 	#include "WProgram.h"
 #else
 	#include "Arduino.h"
@@ -320,6 +323,7 @@ public:
   }
 
 private:
+#ifndef DISABLE_LOGGING
 	void print(const char *format, va_list args);
 
 	void print(const __FlashStringHelper *format, va_list args);
@@ -333,7 +337,6 @@ private:
 
 	template <class T> void printLevel(int level, bool cr, T msg, ...)
 	{
-#ifndef DISABLE_LOGGING
 		if (level > _level)
 		{
 			return;
@@ -367,10 +370,8 @@ private:
 		{
 		    _logOutput->print(CR);
 		}
-#endif
 	}
 
-#ifndef DISABLE_LOGGING
 	int _level;
 	bool _showLevel;
 	Print* _logOutput;
