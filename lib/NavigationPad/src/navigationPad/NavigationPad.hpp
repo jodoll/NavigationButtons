@@ -28,6 +28,12 @@ namespace NavigationPad
 
         KeyCode key;
         Type type;
+
+
+        bool operator==(const Event &other) const
+        {
+            return this->type == other.type && this->key == other.key;
+        }
     };
 }
 

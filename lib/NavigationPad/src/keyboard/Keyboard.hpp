@@ -33,6 +33,11 @@ namespace Keyboard
         {
             return textValue < other.textValue;
         }
+
+        bool operator==(const Key &other) const
+        {
+            return this->textValue == other.textValue;
+        }
     };
 
     struct Press
