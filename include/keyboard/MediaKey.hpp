@@ -1,4 +1,3 @@
-#include "HardwareSerial.h"
 #include <map>
 
 #ifndef MEDIA_KEY
@@ -51,8 +50,6 @@ static std::string mediaKeyReportToText(const MediaKeyCode mediaKeyCode)
     }
     else
     {
-        if (DEBUG)
-            Serial.println("Failed to match mediaKeyReport to text representation");
         return "unknown";
     }
 }

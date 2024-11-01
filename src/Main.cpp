@@ -3,9 +3,11 @@
 #include "navigationPad/BarButtons.hpp"
 #include "BleKeyboard.h"
 #include "keyboard/NavigationKeyMap.hpp"
+#include "bleKeyboard/BleKeyboardWrapper.hpp"
 
+BleKeyboardWrapper keyboardWrapper = BleKeyboardWrapper();
 StatusLedController ledController = StatusLedController(BarButtons::ledPin);
-KeyHandler keyHandler = KeyHandler(ledController);
+KeyHandler keyHandler = KeyHandler(ledController, keyboardWrapper);
 KeypadNavigationPad keypadKeyboard = BarButtons::keypad(keyHandler);
 PhysicalNavigationPad& keyboard = keypadKeyboard;
 

@@ -13,11 +13,11 @@ private:
         Keyboard::Key key;
         unsigned long pressAfter;
     };
-    
+
     static NoopKeyMap noopKeyMap;
     StatusLedController *ledController;
     Keyboard::KeyMap *currentKeyMap = &noopKeyMap;
-    KeyboardWrapper wrapper;
+    KeyboardWrapper *wrapper;
     std::map<NavigationPad::KeyCode, std::set<Keyboard::Key>> pressedKeys;
     std::map<Keyboard::Key, FutureKeyPress> repeatingKeys;
 
@@ -29,10 +29,11 @@ private:
     void releaseKeys(NavigationPad::Event &event);
 
 public:
-    KeyHandler(StatusLedController &ledController) : ledController(&ledController) {};
-    KeyHandler(StatusLedController &ledController, int repeatingKeyDelayMs)
-        : ledController(&ledController), repeatingKeyDelayMs(repeatingKeyDelayMs) {};
-    ~KeyHandler(){};
+    KeyHandler(StatusLedController &ledController, KeyboardWrapper &wrapper)
+        : ledController(&ledController), wrapper(&wrapper) {};
+    KeyHandler(StatusLedController &ledController, KeyboardWrapper &wrapper, int repeatingKeyDelayMs)
+        : ledController(&ledController), wrapper(&wrapper), repeatingKeyDelayMs(repeatingKeyDelayMs) {};
+    ~KeyHandler() {};
 
     void connect();
     void setKeyMap(Keyboard::KeyMap &keyMap);

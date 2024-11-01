@@ -1,4 +1,3 @@
-#include "Arduino.h"
 #include "navigationPad/NavigationPad.hpp"
 #include "keyboard/MediaKey.hpp"
 #include <vector>
