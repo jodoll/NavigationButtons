@@ -6,6 +6,7 @@
 class KeyboardWrapper
 {
 public:
+    virtual ~KeyboardWrapper() {}
     virtual void connect()= 0;
     virtual void writeKey(const Keyboard::Key &key)=0;
     virtual void holdKey(Keyboard::Key &key)=0;
