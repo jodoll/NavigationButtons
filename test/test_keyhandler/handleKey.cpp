@@ -87,6 +87,52 @@ TEST_F(KeyHandlerTest, ShouldHoldAndReleaseKey)
     sut.handle(keyUpEvent);
 }
 
+TEST_F(KeyHandlerTest, ShoulSendKeyOnReleaseAfterKeyHasBeenReleased)
+{
+    // Given
+    sut.connect();
+    sut.setKeyMap(keyMap);
+
+    Event keyDownEvent = Event{KeyCode::ENTER, Event::Type::PRESSED};
+    Event keyUpEvent = Event{KeyCode::ENTER, Event::Type::RELEASED};
+    Key keyEnter = Key('D');
+    EXPECT_CALL(keyMap, lookup(keyDownEvent))
+        .WillOnce(Return(std::vector<Press>({Press{Press::Action::HOLD, 'D'}})));
+    EXPECT_CALL(keyMap, lookup(keyUpEvent))
+        .WillOnce(Return(std::vector<Press>({Press{Press::Action::INSTANT, 'D'}})));
+
+    // Then
+    EXPECT_CALL(wrapper, holdKey(keyEnter)).Times(1);
+    EXPECT_CALL(wrapper, releaseKey(keyEnter)).Times(1);
+    EXPECT_CALL(wrapper, writeKey(keyEnter)).Times(1);
+
+    // When
+    sut.handle(keyDownEvent);
+    sut.handle(keyUpEvent);
+    sut.handle(keyUpEvent);
+}
+
+TEST_F(KeyHandlerTest, ShouldHandleReleasedKeysAfterKeyMapChange)
+{
+    // Given
+    sut.connect();
+    sut.setKeyMap(keyMap);
+
+    Event keyUpEvent = Event{KeyCode::ENTER, Event::Type::RELEASED};
+    Key keyEnter = Key('D');
+    EXPECT_CALL(keyMap, lookup(keyUpEvent))
+        .WillOnce(Return(std::vector<Press>({Press{Press::Action::HOLD, 'D'}})))
+        .WillOnce(Return(std::vector<Press>({Press{Press::Action::INSTANT, 'D'}})));
+
+    // Then
+    EXPECT_CALL(wrapper, holdKey(keyEnter)).Times(1);
+    EXPECT_CALL(wrapper, writeKey(keyEnter)).Times(1);
+
+    // When
+    sut.handle(keyUpEvent);
+    sut.setKeyMap(keyMap);
+    sut.handle(keyUpEvent);
+}
 
 TEST_F(KeyHandlerTest, ShouldHandleEventsWhileKeyIsPressed)
 {
@@ -117,7 +163,6 @@ TEST_F(KeyHandlerTest, ShouldHandleEventsWhileKeyIsPressed)
     sut.handle(backEvent);
 }
 
-
 TEST_F(KeyHandlerTest, ShouldHandleEventsOnReleaseKey)
 {
     // Given
@@ -143,4 +188,3 @@ TEST_F(KeyHandlerTest, ShouldHandleEventsOnReleaseKey)
     sut.handle(keyDownEvent);
     sut.handle(keyUpEvent);
 }
-
