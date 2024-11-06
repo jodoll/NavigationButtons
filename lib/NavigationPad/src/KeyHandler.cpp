@@ -34,6 +34,11 @@ void KeyHandler::handle(NavigationPad::Event event)
     {
         ledController->onKeyReleased();
         releaseKeys(event);
+        if (consumedKeyCodes.find(event.key) != consumedKeyCodes.end())
+        {
+            consumedKeyCodes.erase(event.key);
+            return;
+        }
     }
 
     auto keyPresses = currentKeyMap->lookup(event);
@@ -54,6 +59,8 @@ void KeyHandler::handle(NavigationPad::Event event)
             break;
         }
     }
+    if (event.type > event.RELEASED && !keyPresses.empty())
+        consumedKeyCodes.insert(event.key);
 }
 
 void KeyHandler::releaseKeys(NavigationPad::Event &event)

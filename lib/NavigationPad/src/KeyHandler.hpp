@@ -31,6 +31,7 @@ private:
     void releaseKeys(NavigationPad::Event &event);
 
 public:
+    std::set<NavigationPad::KeyCode> consumedKeyCodes;
     KeyHandler(StatusLedController &ledController, KeyboardWrapper &wrapper)
         : ledController(&ledController), wrapper(&wrapper) {};
     KeyHandler(StatusLedController &ledController, KeyboardWrapper &wrapper, int repeatingKeyDelayMs)
