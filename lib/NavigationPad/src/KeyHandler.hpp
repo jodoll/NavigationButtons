@@ -23,8 +23,8 @@ private:
     std::map<NavigationPad::KeyCode, std::set<Keyboard::Key>> pressedKeys;
     std::map<Keyboard::Key, FutureKeyPress> repeatingKeys;
 
+    bool repeatingKeysChanged = false;
     unsigned long lastTick = 0;
-    const int repeatingKeyDelayMs = 500;
 
     void addRepeatingKey(Keyboard::Key &key);
     void removeRepeatingKey(Keyboard::Key &key);
@@ -36,6 +36,9 @@ public:
     KeyHandler(StatusLedController &ledController, KeyboardWrapper &wrapper, int repeatingKeyDelayMs)
         : ledController(&ledController), wrapper(&wrapper), repeatingKeyDelayMs(repeatingKeyDelayMs) {};
     ~KeyHandler() {};
+
+    const int repeatingKeyDelayMs = 500;
+    void setClock(Clock &clock);
 
     void connect();
     void setKeyMap(Keyboard::KeyMap &keyMap);

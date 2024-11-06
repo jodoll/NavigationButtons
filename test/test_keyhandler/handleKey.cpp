@@ -1,5 +1,3 @@
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
 #include "KeyHandler.hpp"
 #include "MockLedController.cc"
 #include "MockKeyboardWrapper.cc"
@@ -11,8 +9,6 @@ using namespace Keyboard;
 using testing::An;
 using testing::InSequence;
 using testing::Return;
-
-
 
 // The fixture for testing class Foo.
 class KeyHandlerTest : public testing::Test
@@ -92,32 +88,3 @@ TEST_F(KeyHandlerTest, ShouldHoldAndReleaseKey)
     sut.handle(keyUpEvent);
 }
 
-#if defined(ARDUINO)
-#include <Arduino.h>
-
-void setup()
-{
-    Serial.begin(115200);
-    ::testing::InitGoogleMock();
-}
-
-void loop()
-{
-    // Run tests
-    if (RUN_ALL_TESTS())
-        ;
-    // sleep for 1 sec
-    delay(1000);
-}
-
-#else
-int main(int argc, char **argv)
-{
-    ::testing::InitGoogleMock(&argc, argv);
-    if (RUN_ALL_TESTS())
-        ;
-
-    // Always return zero-code and allow PlatformIO to parse results
-    return 0;
-}
-#endif

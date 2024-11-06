@@ -3,6 +3,12 @@
 
 NoopKeyMap KeyHandler::noopKeyMap = NoopKeyMap();
 
+void KeyHandler::setClock(Clock &clock)
+{
+    this->clock = &clock;
+    this->lastTick = clock.currentTimeMillis();
+}
+
 void KeyHandler::connect()
 {
     wrapper->connect();
@@ -64,7 +70,7 @@ void KeyHandler::releaseKeys(NavigationPad::Event &event)
 void KeyHandler::tick()
 {
     auto now = clock->currentTimeMillis();
-    if (now < lastTick + 20)
+    if (!repeatingKeysChanged && now < lastTick + 20)
         return;
 
     for (auto &entry : repeatingKeys)
@@ -78,6 +84,7 @@ void KeyHandler::tick()
         }
     };
     lastTick = now;
+    repeatingKeysChanged = false;
 }
 
 void KeyHandler::addRepeatingKey(Keyboard::Key &key)
@@ -85,10 +92,12 @@ void KeyHandler::addRepeatingKey(Keyboard::Key &key)
     Log.verboseln("Inserting key %s", key.textValue.c_str());
     FutureKeyPress futureKeyPress = {key, clock->currentTimeMillis()};
     repeatingKeys.insert({key, futureKeyPress});
+    repeatingKeysChanged = true;
 }
 
 void KeyHandler::removeRepeatingKey(Keyboard::Key &key)
 {
     Log.verboseln("Removing key %s", key.textValue.c_str());
     repeatingKeys.erase(key);
+    repeatingKeysChanged = true;
 }
