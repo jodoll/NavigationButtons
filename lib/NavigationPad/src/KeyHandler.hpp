@@ -20,15 +20,15 @@ private:
     StatusLedController *ledController;
     KeyboardWrapper *wrapper;
     Clock *clock = &systemClock;
-    std::map<NavigationPad::KeyCode, std::set<Keyboard::Key>> pressedKeys;
+    std::set<Keyboard::Key> pressedKeys;
     std::map<Keyboard::Key, FutureKeyPress> repeatingKeys;
 
     bool repeatingKeysChanged = false;
     unsigned long lastTick = 0;
 
     void addRepeatingKey(Keyboard::Key &key);
-    void removeRepeatingKey(Keyboard::Key &key);
-    void releaseKeys(NavigationPad::Event &event);
+    void releaseKeyIfPressed(Keyboard::Key &key);
+    void removeKeyIfRepeating(Keyboard::Key &key);
 
 public:
     std::set<NavigationPad::KeyCode> consumedKeyCodes;

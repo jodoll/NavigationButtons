@@ -104,9 +104,10 @@ TEST_F(RepeatingKeyHandlerTest, ShouldNotSendRepeatingKeyAfterRelease)
     Event keyDownEvent = Event{KeyCode::ENTER, Event::Type::PRESSED};
     Event keyUpEvent = Event{KeyCode::ENTER, Event::Type::RELEASED};
     Key key = Key('D');
-    EXPECT_CALL(keyMap, lookup(An<Event>()))
-        .WillOnce(Return(std::vector<Press>({Press{Press::Action::REPEATING, 'D'}})))
-        .WillRepeatedly(Return(std::vector<Press>()));
+    EXPECT_CALL(keyMap, lookup(keyDownEvent))
+        .WillOnce(Return(std::vector<Press>({Press{Press::Action::REPEATING, 'D'}})));
+    EXPECT_CALL(keyMap, lookup(keyUpEvent))
+        .WillOnce(Return(std::vector<Press>({Press{Press::Action::RELEASE, 'D'}})));
 
     // Then
     EXPECT_CALL(wrapper, writeKey(key)).Times(1);

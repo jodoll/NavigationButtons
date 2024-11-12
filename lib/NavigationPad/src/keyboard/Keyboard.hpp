@@ -46,8 +46,8 @@ namespace Keyboard
         {
             INSTANT,
             HOLD,
-            REPEATING
-            // RELEASE
+            REPEATING,
+            RELEASE
         };
 
         Press(Action action, uint8_t character) : action(action), key(character) {}

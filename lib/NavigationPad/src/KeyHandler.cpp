@@ -33,45 +33,29 @@ void KeyHandler::handle(NavigationPad::Event event)
     else
     {
         ledController->onKeyReleased();
-        releaseKeys(event);
-        if (consumedKeyCodes.find(event.key) != consumedKeyCodes.end())
-        {
-            consumedKeyCodes.erase(event.key);
-            return;
-        }
     }
 
     auto keyPresses = currentKeyMap->lookup(event);
     for (Keyboard::Press keyPress : keyPresses)
     {
+        releaseKeyIfPressed(keyPress.key);
         switch (keyPress.action)
         {
         case Keyboard::Press::Action::INSTANT:
             wrapper->writeKey(keyPress.key);
             break;
         case Keyboard::Press::Action::HOLD:
-            pressedKeys[event.key].insert(keyPress.key);
+            pressedKeys.emplace(keyPress.key);
             wrapper->holdKey(keyPress.key);
             break;
         case Keyboard::Press::Action::REPEATING:
-            pressedKeys[event.key].insert(keyPress.key);
             addRepeatingKey(keyPress.key);
+            break;
+        case Keyboard::Press::Action::RELEASE:
+            //key already released
             break;
         }
     }
-    if (event.type > event.RELEASED && !keyPresses.empty())
-        consumedKeyCodes.insert(event.key);
-}
-
-void KeyHandler::releaseKeys(NavigationPad::Event &event)
-{
-    std::set<Keyboard::Key> &keys = pressedKeys[event.key];
-    for (Keyboard::Key key : keys)
-    {
-        removeRepeatingKey(key);
-        wrapper->releaseKey(key);
-    }
-    keys.clear();
 }
 
 void KeyHandler::tick()
@@ -97,14 +81,28 @@ void KeyHandler::tick()
 void KeyHandler::addRepeatingKey(Keyboard::Key &key)
 {
     Log.verboseln("Inserting key %s", key.textValue.c_str());
+    pressedKeys.emplace(key);
     FutureKeyPress futureKeyPress = {key, clock->currentTimeMillis()};
     repeatingKeys.insert({key, futureKeyPress});
     repeatingKeysChanged = true;
 }
 
-void KeyHandler::removeRepeatingKey(Keyboard::Key &key)
+void KeyHandler::releaseKeyIfPressed(Keyboard::Key &key)
 {
-    Log.verboseln("Removing key %s", key.textValue.c_str());
-    repeatingKeys.erase(key);
-    repeatingKeysChanged = true;
+    if (pressedKeys.find(key) != pressedKeys.end())
+    {
+        pressedKeys.erase(key);
+        wrapper->releaseKey(key);
+        removeKeyIfRepeating(key);
+    }
+}
+
+void KeyHandler::removeKeyIfRepeating(Keyboard::Key &key)
+{
+    if (repeatingKeys.count(key))
+    {
+        Log.verboseln("Removing key %s", key.textValue.c_str());
+        repeatingKeys.erase(key);
+        repeatingKeysChanged = true;
+    }
 }

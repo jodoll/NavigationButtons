@@ -9,7 +9,8 @@ std::vector<Keyboard::Press> NavigationKeyMap::single(NavigationPad::Event::Type
         return std::vector<Keyboard::Press>(
             {Press(Press::Action::INSTANT, shortPress)});
     else
-        return std::vector<Keyboard::Press>();
+        return std::vector<Keyboard::Press>(
+            {Press(Press::Action::RELEASE, shortPress)});
 }
 
 std::vector<Keyboard::Press> NavigationKeyMap::repeating(NavigationPad::Event::Type action, Key key)
@@ -25,7 +26,8 @@ std::vector<Keyboard::Press> NavigationKeyMap::repeating(NavigationPad::Event::T
         break;
     case NavigationPad::Event::RELEASED:
     default:
-        return std::vector<Keyboard::Press>();
+        return std::vector<Keyboard::Press>(
+            {Press(Press::Action::RELEASE, key)});
     }
 
     return std::vector<Keyboard::Press>(
