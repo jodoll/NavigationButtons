@@ -1,11 +1,13 @@
 #include "navigationPad/PhysicalNavigationPad.hpp"
 #include "Keypad.h"
+#include "navigationPad/PressedStateDecorator.hpp"
 #include "KeyHandler.hpp"
 #include <map>
 
 class KeypadNavigationPad : public PhysicalNavigationPad
 {
 private:
+    PressedStateDecorator pressedStateDecorator;
     KeyHandler *keyHandler;
     Keypad keypad;
     std::map<char, NavigationPad::KeyCode> keymap;

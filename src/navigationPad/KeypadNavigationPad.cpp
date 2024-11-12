@@ -39,5 +39,6 @@ void KeypadNavigationPad::handleKey(Key &key)
         return;
     };
 
-    keyHandler->handle(NavigationPad::Event{keyCode, type});
+    auto event = pressedStateDecorator.onKeypadEvent(NavigationPad::Event{keyCode, type});
+    keyHandler->handle(event);
 }
