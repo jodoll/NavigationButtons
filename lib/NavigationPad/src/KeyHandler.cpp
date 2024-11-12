@@ -17,7 +17,7 @@ void KeyHandler::connect()
 
 void KeyHandler::setKeyMap(Keyboard::KeyMap &keyMap)
 {
-    wrapper->releaseAll();
+    releaseAllKeys();
     currentKeyMap = &keyMap;
     ledController->indicateSelectedKeyMap(3);
 }
@@ -61,7 +61,7 @@ void KeyHandler::handle(NavigationPad::Event event)
 void KeyHandler::tick()
 {
     auto now = clock->currentTimeMillis();
-    if (!repeatingKeysChanged && now < lastTick + 20)
+    if (!newRepeatingKeyAdded && now < lastTick + 20)
         return;
 
     for (auto &entry : repeatingKeys)
@@ -75,7 +75,7 @@ void KeyHandler::tick()
         }
     };
     lastTick = now;
-    repeatingKeysChanged = false;
+    newRepeatingKeyAdded = false;
 }
 
 void KeyHandler::addRepeatingKey(Keyboard::Key &key)
@@ -84,7 +84,14 @@ void KeyHandler::addRepeatingKey(Keyboard::Key &key)
     pressedKeys.emplace(key);
     FutureKeyPress futureKeyPress = {key, clock->currentTimeMillis()};
     repeatingKeys.insert({key, futureKeyPress});
-    repeatingKeysChanged = true;
+    newRepeatingKeyAdded = true;
+}
+
+void KeyHandler::releaseAllKeys()
+{
+    wrapper->releaseAll();
+    pressedKeys.clear();
+    repeatingKeys.clear();
 }
 
 void KeyHandler::releaseKeyIfPressed(Keyboard::Key &key)
@@ -103,6 +110,5 @@ void KeyHandler::removeKeyIfRepeating(Keyboard::Key &key)
     {
         Log.verboseln("Removing key %s", key.textValue.c_str());
         repeatingKeys.erase(key);
-        repeatingKeysChanged = true;
     }
 }

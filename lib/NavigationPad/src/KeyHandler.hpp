@@ -23,10 +23,11 @@ private:
     std::set<Keyboard::Key> pressedKeys;
     std::map<Keyboard::Key, FutureKeyPress> repeatingKeys;
 
-    bool repeatingKeysChanged = false;
+    bool newRepeatingKeyAdded = false;
     unsigned long lastTick = 0;
 
     void addRepeatingKey(Keyboard::Key &key);
+    void releaseAllKeys();
     void releaseKeyIfPressed(Keyboard::Key &key);
     void removeKeyIfRepeating(Keyboard::Key &key);
 

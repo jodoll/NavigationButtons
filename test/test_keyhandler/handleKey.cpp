@@ -159,6 +159,28 @@ TEST_F(KeyHandlerTest, shouldReleaseKeysOnKeymapChange)
     sut.setKeyMap(keyMap);
 }
 
+TEST_F(KeyHandlerTest, shouldNotReleaseKeysAgainAfterKeymapChange)
+{
+    // Given
+    sut.connect();
+    sut.setKeyMap(keyMap);
+
+    Event keyUpEvent = Event{KeyCode::ENTER, Event::Type::RELEASED};
+    Key keyEnter = Key('D');
+    EXPECT_CALL(keyMap, lookup(keyUpEvent))
+        .WillRepeatedly(Return(std::vector<Press>({Press{Press::Action::HOLD, 'D'}})));
+
+    // Then
+    EXPECT_CALL(wrapper, holdKey(keyEnter)).Times(2);
+    EXPECT_CALL(wrapper, releaseAll()).Times(1);
+    EXPECT_CALL(wrapper, releaseKey(keyEnter)).Times(0);
+
+    // When
+    sut.handle(keyUpEvent);
+    sut.setKeyMap(keyMap);
+    sut.handle(keyUpEvent);
+}
+
 TEST_F(KeyHandlerTest, ShouldHandleEventsWhileKeyIsPressed)
 {
     // Given

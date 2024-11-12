@@ -119,3 +119,23 @@ TEST_F(RepeatingKeyHandlerTest, ShouldNotSendRepeatingKeyAfterRelease)
     sut.handle(keyUpEvent);
     sut.tick();
 }
+
+TEST_F(RepeatingKeyHandlerTest, ShouldReleaseRepeatingKeysOnKeyMapChange)
+{
+    // Given
+    Event keyDownEvent = Event{KeyCode::ENTER, Event::Type::PRESSED};
+    Key key = Key('D');
+    EXPECT_CALL(keyMap, lookup(keyDownEvent))
+        .WillOnce(Return(std::vector<Press>({Press{Press::Action::REPEATING, 'D'}})));
+
+    // Then
+    EXPECT_CALL(wrapper, writeKey(key)).Times(1);
+    EXPECT_CALL(wrapper, releaseAll()).Times(1);
+
+    // When
+    sut.handle(keyDownEvent);
+    sut.tick();
+    sut.setKeyMap(keyMap);
+    clock.advanceBy(sut.repeatingKeyDelayMs);
+    sut.tick();
+}
