@@ -2,75 +2,97 @@
 #include "keyboard/KeyCodes.hpp"
 
 using namespace Keyboard;
+using NavigationPad::Event;
+using Keyboard::Press;
 
-std::vector<Keyboard::Press> NavigationKeyMap::single(NavigationPad::Event::Type action, Key shortPress)
+std::vector<Press> NavigationKeyMap::single(Event::Type action, Key shortPress)
 {
-    if (action == NavigationPad::Event::Type::PRESSED)
-        return std::vector<Keyboard::Press>(
-            {Press(Press::Action::INSTANT, shortPress)});
+    if (action == Event::PRESSED)
+        return std::vector<Press>(
+            {Press(Press::INSTANT, shortPress)});
     else
-        return std::vector<Keyboard::Press>(
-            {Press(Press::Action::RELEASE, shortPress)});
+        return std::vector<Press>();
 }
 
-std::vector<Keyboard::Press> NavigationKeyMap::repeating(NavigationPad::Event::Type action, Key key)
+std::vector<Press> NavigationKeyMap::repeating(Event::Type action, Key key)
 {
     Press::Action actionType;
     switch (action)
     {
-    case NavigationPad::Event::Type::PRESSED:
-        actionType = Press::Action::INSTANT;
+    case Event::PRESSED:
+        actionType = Press::INSTANT;
         break;
-    case NavigationPad::Event::Type::HOLD:
-        actionType = Press::Action::REPEATING;
+    case Event::HOLD:
+        actionType = Press::REPEATING;
         break;
-    case NavigationPad::Event::RELEASED:
-    default:
-        return std::vector<Keyboard::Press>(
-            {Press(Press::Action::RELEASE, key)});
+    case Event::RELEASED:
+    case Event::RELEASED_HOLD:
+        return std::vector<Press>(
+            {Press(Press::RELEASE, key)});
     }
 
-    return std::vector<Keyboard::Press>(
+    return std::vector<Press>(
         {Press(actionType, key)});
 }
 
-std::vector<Keyboard::Press> NavigationKeyMap::hold(NavigationPad::Event::Type action, Key key)
+std::vector<Press> NavigationKeyMap::hold(Event::Type action, Key key)
 {
     Press::Action actionType;
     switch (action)
     {
-    case NavigationPad::Event::Type::HOLD:
-        actionType = Press::Action::HOLD;
+    case Event::PRESSED:
+        return std::vector<Press>();
+    case Event::HOLD:
+        actionType = Press::HOLD;
         break;
-    case NavigationPad::Event::RELEASED:
-        actionType = Press::Action::INSTANT;
+    case Event::RELEASED_HOLD:
+        actionType = Press::RELEASE;
         break;
-    default:
-    case NavigationPad::Event::Type::PRESSED:
-        return std::vector<Keyboard::Press>();
+    case Event::RELEASED:
+        actionType = Press::INSTANT;
+        break;
     }
 
-    return std::vector<Keyboard::Press>(
+    return std::vector<Press>(
         {Press(actionType, key)});
 }
 
-std::vector<Keyboard::Press> NavigationKeyMap::alternative(NavigationPad::Event::Type action, Key shortPress, Key longPress)
+std::vector<Press> NavigationKeyMap::alternative(Event::Type action, Key shortPress, Key longPress)
 {
     switch (action)
     {
-    case NavigationPad::Event::Type::HOLD:
-        return std::vector<Keyboard::Press>(
-            {Press(Press::Action::INSTANT, longPress)});
-    case NavigationPad::Event::RELEASED:
-        return std::vector<Keyboard::Press>(
-            {Press(Press::Action::INSTANT, shortPress)});
-    case NavigationPad::Event::Type::PRESSED:
-    default:
-        return std::vector<Keyboard::Press>();
+    case Event::HOLD:
+        return std::vector<Press>(
+            {Press(Press::INSTANT, longPress)});
+    case Event::RELEASED:
+        return std::vector<Press>(
+            {Press(Press::INSTANT, shortPress)});
+    case Event::PRESSED:
+    case Event::RELEASED_HOLD:
+        return std::vector<Press>();
+    }
+
+}
+std::vector<Press> NavigationKeyMap::alternativeRepeating(Event::Type action, Key shortPress, Key longPress)
+{
+    switch (action)
+    {
+    case Event::HOLD:
+        return std::vector<Press>(
+            {Press(Press::REPEATING, longPress)});
+    case Event::RELEASED_HOLD:
+        return std::vector<Press>{
+            {Press(Press::RELEASE, longPress)}
+        };
+    case Event::RELEASED:
+        return std::vector<Press>(
+            {Press(Press::INSTANT, shortPress)});
+    case Event::PRESSED:
+        return std::vector<Press>();
     }
 }
 
-std::vector<Keyboard::Press> NavigationKeyMap::lookup(NavigationPad::Event event)
+std::vector<Press> NavigationKeyMap::lookup(Event event)
 {
     switch (event.key)
     {
