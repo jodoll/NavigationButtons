@@ -21,6 +21,7 @@ namespace NavigationPad
     {
         enum Type
         {
+            RELEASED_HOLD,
             RELEASED,
             PRESSED,
             HOLD
